@@ -22,7 +22,7 @@ void setup() {
 	Serial.begin(9600);
 	pinMode(A0, INPUT);
 	servo.attach(7);
-	// pinMode(A2, INPUT);
+	pinMode(A2, INPUT);
 }
 
 void loop() {
@@ -31,7 +31,6 @@ void loop() {
 	xVal = map(xVal, 4, 999 * 5, 0, 180);
 	servo.write(xVal);
 	yVal = analogRead(A2);
-
 
 	Serial.print("( ");
 	Serial.print(xVal);
