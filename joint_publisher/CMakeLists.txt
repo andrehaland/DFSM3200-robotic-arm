@@ -16,11 +16,9 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
 add_executable(joint_publisher src/main.cpp)
 target_link_libraries(joint_publisher ${catkin_LIBRARIES})
-
