@@ -1,0 +1,15 @@
+<launch>
+	<arg name="model" default="$(find simple_robotic_model)/urdf/simple_model.urdf.xacro"/>
+
+	<include file="$(find simple_robotic_model)/launch/gazebo.launch">
+		<arg name="model" value="$(arg model)"/>
+	</include>
+
+	<rosparam file="$(find simple_robotic_model)/config/simple_robotic_model_control.yaml" command="load"/>
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/simple_robotic_model"  args="joint_state_controller
+																																																																	joint2_position_controller
+																																																																	joint3_position_controller
+																																																																	joint4_position_controller
+																																																																	joint5_position_controller"/>
+</launch>

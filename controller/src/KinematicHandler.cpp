@@ -1,5 +1,5 @@
 #include "KinematicHandler.h"
-
+#include <std_msgs/Float64.h>
 
 KinematicHandler::KinematicHandler(ros::NodeHandle* nh)
 {
@@ -7,6 +7,11 @@ KinematicHandler::KinematicHandler(ros::NodeHandle* nh)
     
     client = node_ptr->serviceClient<ik_srvs::CartesianToJoint>("inverse_kinematic");
 	joint_publisher = node_ptr->advertise<servo_msgs::JointAngles>("joint_angles", 100);
+	joint_publisher2 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint2_position_controller/command", 100);
+	joint_publisher3 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint3_position_controller/command", 100);
+	joint_publisher4 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint4_position_controller/command", 100);
+	joint_publisher5 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint5_position_controller/command", 100);
+
 
 }
 
@@ -28,8 +33,21 @@ void KinematicHandler::cameraCallback(const geometry_msgs::Vector3& cartesian)
 		joints.fifth_joint = srv.response.joints.fifth_joint;
 
         ROS_INFO("j1 = %f, j2 = %f, j3 = %f, j4, = %f, j5 = %f", joints.first_joint, joints.second_joint, joints.third_joint, joints.fourth_joint, joints.fifth_joint);
-		
 		joint_publisher.publish(joints);
+
+		std_msgs::Float64 joint;
+
+		joint.data = joints.first_joint;
+		joint_publisher2.publish(joint);
+
+		joint.data = joints.second_joint;
+		joint_publisher3.publish(joint);
+
+		joint.data = joints.third_joint;
+		joint_publisher4.publish(joint);
+
+		joint.data = joints.fourth_joint;
+		joint_publisher5.publish(joint);
 	}
 	else
 	{

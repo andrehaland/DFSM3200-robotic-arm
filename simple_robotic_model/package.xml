@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package>
+<!--<package version="2">-->
+  <name>simple_robotic_model</name>
+  <version>0.0.0</version>
+  <description>The simple_robotic_model package</description>
+
+  <maintainer email="erlend@todo.todo">erlend</maintainer>
+  <license>TODO</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+	<build_depend>gazebo_msgs</build_depend>
+	<build_depend>gazebo_plugins</build_depend>
+	<build_depend>gazebo_ros</build_depend>
+	<build_depend>gazebo_ros_control</build_depend>
+	<!--
+	<build_export_depend>actionlib</build_export_depend>
+  <build_export_depend>actionlib_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  -->
+	<run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>std_msgs</run_depend>
+	<run_depend>joint_state_publisher</run_depend>
+	<run_depend>robot_state_publisher</run_depend>
+	<run_depend>rviz</run_depend>
+	<run_depend>xacro</run_depend>
+	<run_depend>gazebo_msgs</run_depend>
+	<run_depend>gazebo_plugins</run_depend>
+	<run_depend>gazebo_ros</run_depend>
+	<run_depend>gazebo_ros_control</run_depend>
+	<export>
+  </export>
+</package>

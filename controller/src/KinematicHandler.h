@@ -27,6 +27,11 @@ private:
 
     ros::Publisher joint_publisher;
 
+		ros::Publisher joint_publisher2;
+		ros::Publisher joint_publisher3;
+		ros::Publisher joint_publisher4;
+		ros::Publisher joint_publisher5;
+
     ik_srvs::CartesianToJoint srv;
 
     servo_msgs::JointAngles joints;
