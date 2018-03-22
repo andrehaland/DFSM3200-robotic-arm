@@ -66,7 +66,9 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     ////////////////////////////////////////////////////////
 
-    a_
+    float sin_two_theta_one = sin(theta_one);
+
+
 
     ROS_INFO("theta_one_plus = %f", radToDeg(theta_one_plus));
     ROS_INFO("theta_one_minus = %f", radToDeg(theta_one_minus));
