@@ -1,5 +1,5 @@
-int16 first_joint
-int16 second_joint
-int16 third_joint
-int16 fourth_joint
-int16 fifth_joint
+float64 first_joint
+float64 second_joint
+float64 third_joint
+float64 fourth_joint
+float64 fifth_joint

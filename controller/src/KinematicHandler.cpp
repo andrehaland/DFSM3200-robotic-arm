@@ -27,7 +27,7 @@ void KinematicHandler::cameraCallback(const geometry_msgs::Vector3& cartesian)
 		joints.fourth_joint = srv.response.joints.fourth_joint;
 		joints.fifth_joint = srv.response.joints.fifth_joint;
 
-        ROS_INFO("j1 = %d, j2 = %d, j3 = %d, j4, = %d, j5 = %d", joints.first_joint, joints.second_joint, joints.third_joint, joints.fourth_joint, joints.fifth_joint);
+        ROS_INFO("j1 = %f, j2 = %f, j3 = %f, j4, = %f, j5 = %f", joints.first_joint, joints.second_joint, joints.third_joint, joints.fourth_joint, joints.fifth_joint);
 		
 		joint_publisher.publish(joints);
 	}
