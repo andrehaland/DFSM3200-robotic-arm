@@ -6,7 +6,7 @@
 <robot name="simple_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- Include materials -->
   <material name="Black">
-    <color rgba="0.0 0.0 0.0 1.0"/>
+    <color rgba="0.5 0.0 0.0 1.0"/>
   </material>
   <material name="Red">
     <color rgba="0.8 0.0 0.0 1.0"/>
@@ -140,6 +140,27 @@
   <gazebo reference="fifth_link">
     <material>Gazebo/Black</material>
   </gazebo>
+  <link name="sixth_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.14"/>
+      <geometry>
+        <box size="0.1 0.1 0.2"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.2"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  <gazebo reference="sixth_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
   <joint name="bottom_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 -0.04"/>
     <parent link="base_link"/>
@@ -156,7 +177,7 @@
     <origin rpy="0 0 0" xyz="0 0 0.26"/>
     <parent link="second_link"/>
     <child link="third_link"/>
-    <axis xyz="0 1 0"/>
+    <axis xyz="1 0 0"/>
     <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
   </joint>
   <joint name="fourth_joint" type="revolute">
@@ -170,6 +191,13 @@
     <origin rpy="0 0 0" xyz="0 0 0.26"/>
     <parent link="fourth_link"/>
     <child link="fifth_link"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
+  </joint>
+  <joint name="sixth_joint" type="revolute">
+    <origin rpy="0 0 0" xyz="0 0 0.26"/>
+    <parent link="fifth_link"/>
+    <child link="sixth_link"/>
     <axis xyz="1 0 0"/>
     <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
   </joint>
@@ -215,8 +243,7 @@
   </transmission>
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/</robotNamespace>
+      <robotNamespace>/simple_robotic_model</robotNamespace>
     </plugin>
   </gazebo>
 </robot>
-
