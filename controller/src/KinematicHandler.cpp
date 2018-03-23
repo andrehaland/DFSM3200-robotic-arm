@@ -11,6 +11,7 @@ KinematicHandler::KinematicHandler(ros::NodeHandle* nh)
 	joint_publisher3 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint3_position_controller/command", 100);
 	joint_publisher4 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint4_position_controller/command", 100);
 	joint_publisher5 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint5_position_controller/command", 100);
+	joint_publisher6 = node_ptr->advertise<std_msgs::Float64>("/simple_robotic_model/joint6_position_controller/command", 100);
 
 
 }
@@ -48,6 +49,9 @@ void KinematicHandler::cameraCallback(const geometry_msgs::Vector3& cartesian)
 
 		joint.data = joints.fourth_joint;
 		joint_publisher5.publish(joint);
+
+		joint.data = joints.fifth_joint;
+		joint_publisher6.publish(joint);
 	}
 	else
 	{

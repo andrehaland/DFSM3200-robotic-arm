@@ -230,6 +230,7 @@
 		<xacro:transmission_block joint_name="third_joint"/>
 		<xacro:transmission_block joint_name="fourth_joint"/>
 		<xacro:transmission_block joint_name="fifth_joint"/>
+		<xacro:transmission_block joint_name="sixth_joint"/>
 		<gazebo>
 			<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
 				<robotNamespace>/simple_robotic_model</robotNamespace>
