@@ -31,6 +31,7 @@ private:
 		ros::Publisher joint_publisher3;
 		ros::Publisher joint_publisher4;
 		ros::Publisher joint_publisher5;
+		ros::Publisher joint_publisher6;
 
     ik_srvs::CartesianToJoint srv;
 
