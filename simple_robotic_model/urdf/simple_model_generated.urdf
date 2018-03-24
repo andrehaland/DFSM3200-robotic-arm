@@ -14,36 +14,18 @@
   <material name="White">
     <color rgba="1.0 1.0 1.0 1.0"/>
   </material>
-  <!-- Bottom link -->
-  <link name="bottom_link">
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="1 1 0.02"/>
-      </geometry>
-      <material name="Black"/>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <geometry>
-        <box size="1 1 0.02"/>
-      </geometry>
-    </collision>
-  </link>
-  <gazebo reference="bottom_link">
-    <material>Gazebo/Black</material>
-  </gazebo>
+  <link name="world"/>
   <!-- Base link -->
   <link name="base_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.02"/>
+      <origin rpy="0 0 0" xyz="0 0 0.05"/>
       <geometry>
         <box size="0.1 0.1 0.1"/>
       </geometry>
       <material name="White"/>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.05"/>
       <geometry>
         <box size="0.1 0.1 0.1"/>
       </geometry>
@@ -54,17 +36,17 @@
     </inertial>
   </link>
   <gazebo reference="base_link">
-    <material>Gazebo/Red</material>
+    <material>Gazebo/Yellow</material>
   </gazebo>
   <link name="second_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.14"/>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
       <geometry>
         <box size="0.1 0.1 0.2"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0.1"/>
       <geometry>
         <box size="0.1 0.1 0.2"/>
       </geometry>
@@ -75,19 +57,19 @@
     </inertial>
   </link>
   <gazebo reference="second_link">
-    <material>Gazebo/White</material>
+    <material>Gazebo/Green</material>
   </gazebo>
   <link name="third_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.14"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </collision>
     <inertial>
@@ -96,19 +78,19 @@
     </inertial>
   </link>
   <gazebo reference="third_link">
-    <material>Gazebo/Black</material>
+    <material>Gazebo/Blue</material>
   </gazebo>
   <link name="fourth_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.14"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </collision>
     <inertial>
@@ -117,19 +99,19 @@
     </inertial>
   </link>
   <gazebo reference="fourth_link">
-    <material>Gazebo/White</material>
+    <material>Gazebo/Pink</material>
   </gazebo>
   <link name="fifth_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.14"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </collision>
     <inertial>
@@ -142,15 +124,15 @@
   </gazebo>
   <link name="sixth_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.14"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <origin rpy="0 0 0" xyz="0.1 0 0"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <box size="0.2 0.1 0.1"/>
       </geometry>
     </collision>
     <inertial>
@@ -159,47 +141,46 @@
     </inertial>
   </link>
   <gazebo reference="sixth_link">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Black</material>
   </gazebo>
-  <joint name="bottom_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0 0 -0.04"/>
-    <parent link="base_link"/>
-    <child link="bottom_link"/>
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
   </joint>
   <joint name="second_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0 0 0.1"/>
+    <origin rpy="0 0 0" xyz="0 0 0.15"/>
     <parent link="base_link"/>
     <child link="second_link"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
+    <limit effort="300" lower="0" upper="3.14159" velocity="1"/>
   </joint>
   <joint name="third_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0 0 0.26"/>
+    <origin rpy="0 -1.570795 0" xyz="0 0 0.26"/>
     <parent link="second_link"/>
     <child link="third_link"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
   <joint name="fourth_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0 0 0.26"/>
+    <origin rpy="0 0 0" xyz="0.26 0 0"/>
     <parent link="third_link"/>
     <child link="fourth_link"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
   <joint name="fifth_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0 0 0.26"/>
+    <origin rpy="0 0 0" xyz="0.26 0 0"/>
     <parent link="fourth_link"/>
     <child link="fifth_link"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
   <joint name="sixth_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0 0 0.26"/>
+    <origin rpy="0 0 0" xyz="0.26 0 0"/>
     <parent link="fifth_link"/>
     <child link="sixth_link"/>
-    <axis xyz="1 0 0"/>
-    <limit effort="300" lower="-1.0" upper="1.0" velocity="1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
@@ -234,6 +215,16 @@
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="fifth_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="sixth_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor1">
