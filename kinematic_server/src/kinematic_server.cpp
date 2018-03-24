@@ -15,13 +15,6 @@ float degToRad(float deg)
     return (deg * PI) / 180.0f;
 }
 
-
-float getPositive(const float& first, const float& second)
-{
-    return first > second ? first : second;
-}
-
-
 float determineAngle(float first_degrees, float second_degrees)
 {
     // If angles are negative, add one revolution
@@ -34,9 +27,6 @@ float determineAngle(float first_degrees, float second_degrees)
         second_degrees += 360.0f;
     }
 
-    ROS_INFO("First before std::trunc: %f", first_degrees);
-    ROS_INFO("Second before std::trunc: %f", second_degrees);
-
     float trunced_first = std::trunc(1000 * first_degrees) / 1000;
     float trunced_second = std::trunc(1000 * second_degrees) / 1000;
 
@@ -44,13 +34,11 @@ float determineAngle(float first_degrees, float second_degrees)
     if(trunced_first >= 0.0f && trunced_first <= 180.0f)
     {
         // Return radians for further use in inverse kinematic operations
-        ROS_INFO("Returning first: %f\n", first_degrees);
         return degToRad(first_degrees);
     }
     else
     {
         // Return radians for further use in inverse kinematic operations
-        ROS_INFO("Returning second: %f\n", second_degrees);
         return degToRad(second_degrees);
     }
 }
@@ -72,7 +60,7 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     ////////////////////Theta1///////////////////////////////////
 
-    float d_two = 0.5f;
+    float d_two = 0.2f;
 
     numerator_plus = x + sqrt(-(pow(d_two,2)) + pow(x,2) + pow(y,2));
     numerator_minus = x - sqrt(-(pow(d_two,2)) + pow(x,2) + pow(y,2));
@@ -85,9 +73,9 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     /////////////////////Theta2/////////////////////////////////
 
-    float a_z = 0.3f;
+    float a_z = 0.2f;
     float a_x = 0.4f;
-    float a_y = 0.5f;
+    float a_y = 0.3f;
 
     float cos_theta_one = cos(theta_one);
     float sin_theta_one = sin(theta_one);
@@ -121,16 +109,19 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     float d_one = 0.2f;
 
-    float n_z = 2.0f;
+    float n_z = 0.2f;
 
-    float a_three = 0.3f;
-    float a_four = 0.4f;
-    float a_five = 0.5f;
-    float a_six = 0.6f;
+    float a_three = 0.2f;
+    float a_four = 0.2f;
+    float a_five = 1.0f;
+    float a_six = 0.2f;
 
     float sin_theta_two_plus_three = sin(theta_two + theta_three);
 
     float numerator = d_one - z + a_six * n_z + a_four * sin_theta_two_plus_three + a_three * sin_theta_two;
+
+    ROS_INFO("Theta4 arcsin(%f)", numerator / a_five);
+
 
     float theta_four_first = -1*theta_two - theta_three - asin(numerator / a_five);
     float theta_four_second = PI - theta_two - theta_three - asin(numerator / a_five);
@@ -139,12 +130,12 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     //////////////////////////Theta5//////////////////////////////////
 
-    float n_x = 0.1f;
-    float n_y = 0.1f;
+    float n_x = 1.0f;
+    float n_y = 0.2f;
 
     float inner_parenthesis = n_x * cos(theta_one) * sin(theta_two) - n_z*cos(theta_two) + n_y*sin(theta_one)*sin(theta_two);
 
-    ROS_INFO("arcsin(%f)", inner_parenthesis);
+    ROS_INFO("Theta5 arcsin(%f)", inner_parenthesis);
 
     float theta_five_first = -1*theta_three - theta_four - asin(inner_parenthesis);
     float theta_five_second = PI - theta_four - theta_three - asin(inner_parenthesis);
@@ -153,11 +144,11 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     //////////////////////////////////////////////////////////////////////
 
-    ROS_INFO("Theta_one: %f", theta_one);
-    ROS_INFO("Theta_two: %f", theta_two);
-    ROS_INFO("Theta_three: %f", theta_three);
-    ROS_INFO("Theta_four: %f", theta_four);
-    ROS_INFO("Theta_five: %f\n", theta_five);
+    ROS_INFO("Theta1: %f", theta_one);
+    ROS_INFO("Theta2: %f", theta_two);
+    ROS_INFO("Theta3: %f", theta_three);
+    ROS_INFO("Theta4: %f", theta_four);
+    ROS_INFO("Theta5: %f\n", theta_five);
 
 
     res.joints.first_joint = theta_one;
