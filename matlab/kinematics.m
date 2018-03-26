@@ -20,6 +20,9 @@ function k_func(~, msg)
 
     % Solve inverse kinematics
     ik = robotics.InverseKinematics('RigidBodyTree', robot);
+    
+    ik.SolverParameters.MaxIterations = 500; % Default 1500
+    
     weights = [0.25 0.25 0.25 1 1 1];
     initialguess = robot.homeConfiguration;
     [configSoln, solnInfo] = ik(ee, tform, weights, initialguess);
