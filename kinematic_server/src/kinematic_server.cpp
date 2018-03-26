@@ -1,10 +1,9 @@
 #include <ros/ros.h>
 #include <ik_srvs/CartesianToJoint.h>
-
+#include "std_msgs/Float64.h"	# Erlend added
 #include <math.h>
 
 const float PI = 3.14159265359f;
-
 float radToDeg(float rad)
 {
     return (rad * 180.0f) / PI;

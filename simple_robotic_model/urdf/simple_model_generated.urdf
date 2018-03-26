@@ -143,6 +143,27 @@
   <gazebo reference="sixth_link">
     <material>Gazebo/Black</material>
   </gazebo>
+  <link name="end_effector">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  <gazebo reference="end_effector">
+    <material>Gazebo/Blue</material>
+  </gazebo>
   <joint name="fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
@@ -181,6 +202,11 @@
     <child link="sixth_link"/>
     <axis xyz="0 0 1"/>
     <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
+  </joint>
+  <joint name="ee_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0.26 0 0"/>
+    <parent link="sixth_link"/>
+    <child link="end_effector"/>
   </joint>
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
