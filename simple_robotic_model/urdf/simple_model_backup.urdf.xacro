@@ -70,13 +70,13 @@
 
 		<link name="second_link">
 			<visual>
-				<origin xyz="0 0 ${link_height/2}" rpy="0 0 0"/>
+				<origin xyz="0 0 0.14" rpy="0 0 0"/>
 				<geometry>
 					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0 0 ${link_height/2}" rpy="0 0 0"/>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
 					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
@@ -86,110 +86,90 @@
 		<gazebo reference="second_link">
 			<material>Gazebo/Green</material>
 		</gazebo>
-
+		
 		<link name="third_link">
 			<visual>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<origin xyz="0 0.20 0" rpy="${-M_PI_HALVES} 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</collision>
-		<xacro:inertial_matrix mass="1"/>
+			<xacro:inertial_matrix mass="1"/>
 		</link>
 		<gazebo reference="third_link">
-			<material>Gazebo/Blue</material>
+			<material>Gazebo/Black</material>
 		</gazebo>
 
-		<link	name="fourth_link">
+		<link name="fourth_link">
 			<visual>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<origin xyz="0 0 0.14" rpy="0 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</visual>
-			<collision>	
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</collision>
-		<xacro:inertial_matrix mass="1"/>
+			<xacro:inertial_matrix mass="1"/>
 		</link>
 		<gazebo reference="fourth_link">
-			<material>Gazebo/Pink</material>
+			<material>Gazebo/White</material>
 		</gazebo>
 
 		<link name="fifth_link">
 			<visual>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<origin xyz="0 0 0.14" rpy="0 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</collision>
-		<xacro:inertial_matrix mass="1"/>
+			<xacro:inertial_matrix mass="1"/>
 		</link>
 		<gazebo reference="fifth_link">
 			<material>Gazebo/Black</material>
 		</gazebo>
-
+		
 		<link name="sixth_link">
 			<visual>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<origin xyz="0 0 0.14" rpy="0 0 0"/>
 				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
-				</geometry>
-			</visual>
-			<collision>
-				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="${link_height} ${link_width} ${link_len}"/>
-				</geometry>
-			</collision>
-		<xacro:inertial_matrix mass="1"/>
-		</link>
-		<gazebo reference="sixth_link">
-			<material>Gazebo/Black</material>
-		</gazebo>
-
-		<link name="end_effector">
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0"/>
-				<geometry>
-					<box size="0.05 0.05 0.05"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</visual>
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0"/>
 				<geometry>
-					<box size="0.05 0.05 0.05"/>
+					<box size="${link_len} ${link_width} ${link_height}"/>
 				</geometry>
 			</collision>
 			<xacro:inertial_matrix mass="1"/>
-			</link>
-			<gazebo reference="end_effector">
-				<material>Gazebo/Blue</material>
-			</gazebo>
-
-
+		</link>
+		<gazebo reference="sixth_link">
+			<material>Gazebo/Blue</material>
+		</gazebo>
+		
 		<joint name="fixed" type="fixed">
 			<parent link="world"/>
 			<child link="base_link"/>
 		</joint>
 
 		<joint name="second_joint" type="revolute">
-			<origin xyz="0 0 0.15" rpy="0 0 0"/>
+			<origin xyz="0 0 0.1" rpy="0 0 0"/>
 			<parent link="base_link"/>
 			<child link="second_link"/>
 			<axis xyz="0 0 1"/>
@@ -197,43 +177,37 @@
 		</joint>
 
 		<joint name="third_joint" type="revolute">
-			<origin xyz="0 0 0.26" rpy="0 ${-M_PI_HALVES} 0"/>
+			<origin xyz="0 0 0.26" rpy="${M_PI_HALVES} 0 0"/>
 			<parent link="second_link"/>
 			<child link="third_link"/>
-			<axis xyz="0 0 1"/>
-			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+			<axis xyz="0 1 0"/>
+			<limit effort="300" velocity="1" lower="0" upper="${M_PI}"/>
 		</joint>
 
 		<joint name="fourth_joint" type="revolute">
-			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<origin xyz="0 0 0.26" rpy="0 0 0"/>
 			<parent link="third_link"/>
 			<child link="fourth_link"/>
-			<axis xyz="0 0 1"/>
-			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+			<axis xyz="1 0 0"/>
+			<limit effort="300" velocity="1" lower="0" upper="${M_PI}"/>
 		</joint>
-
+		
 		<joint name="fifth_joint" type="revolute">
-			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<origin xyz="0 0 0.26" rpy="0 0 0"/>
 			<parent link="fourth_link"/>
 			<child link="fifth_link"/>
-			<axis xyz="0 0 1"/>
-			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+			<axis xyz="1 0 0"/>
+			<limit effort="300" velocity="1" lower="0" upper="${M_PI}"/>
 		</joint>
 
 		<joint name="sixth_joint" type="revolute">
-			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<origin xyz="0 0 0.26" rpy="0 0 0"/>
 			<parent link="fifth_link"/>
 			<child link="sixth_link"/>
-			<axis xyz="0 0 1"/>
-			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+			<axis xyz="1 0 0"/>
+			<limit effort="300" velocity="1" lower="0" upper="${M_PI}"/>
 		</joint>
-
-		<joint name="ee_joint" type="fixed">
-			<origin xyz="0.26 0 0" rpy="0 0 0"/>
-			<parent link="sixth_link"/>
-			<child link="end_effector"/>
-		</joint>
-
+		
 		<xacro:transmission_block joint_name="second_joint"/>
 		<xacro:transmission_block joint_name="third_joint"/>
 		<xacro:transmission_block joint_name="fourth_joint"/>
