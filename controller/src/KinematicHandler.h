@@ -16,11 +16,13 @@ public:
     ~KinematicHandler(){}
 
     void cameraCallback(const geometry_msgs::Vector3& cartesian);
+
 		void kinematicCallback(const std_msgs::Float64MultiArray& joints);
 
-
-
 private:
+
+    ros::Time from_camera;
+    ros::Time from_matlab;
 
     ros::NodeHandle* node_ptr;
 
