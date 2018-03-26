@@ -60,7 +60,7 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     ////////////////////Theta1///////////////////////////////////
 
-    float d_two = 0.2f;
+    float d_two = 0.4f;
 
     numerator_plus = x + sqrt(-(pow(d_two,2)) + pow(x,2) + pow(y,2));
     numerator_minus = x - sqrt(-(pow(d_two,2)) + pow(x,2) + pow(y,2));
@@ -74,9 +74,8 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
     /////////////////////Theta2/////////////////////////////////
 
     float a_z = 0.2f;
-    float a_x = 0.4f;
-    float a_y = 0.3f;
-
+    float a_x = 0.2f;
+    float a_y = 0.3f; 
     float cos_theta_one = cos(theta_one);
     float sin_theta_one = sin(theta_one);
 
@@ -107,14 +106,14 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
     float theta_three = determineAngle(radToDeg(theta_three_minus), radToDeg(theta_three_plus));
     /////////////////////Theta4///////////////////////////////////////////
 
-    float d_one = 0.2f;
+    float d_one = 0.4f;
 
     float n_z = 0.2f;
 
-    float a_three = 0.2f;
-    float a_four = 0.2f;
+    float a_three = 1.0f;
+    float a_four = 1.0f;
     float a_five = 1.0f;
-    float a_six = 0.2f;
+    float a_six = 1.0f;
 
     float sin_theta_two_plus_three = sin(theta_two + theta_three);
 
@@ -144,18 +143,18 @@ bool inverseKinematic(ik_srvs::CartesianToJoint::Request &req,
 
     //////////////////////////////////////////////////////////////////////
 
-    ROS_INFO("Theta1: %f", theta_one);
-    ROS_INFO("Theta2: %f", theta_two);
-    ROS_INFO("Theta3: %f", theta_three);
-    ROS_INFO("Theta4: %f", theta_four);
-    ROS_INFO("Theta5: %f\n", theta_five);
+    ROS_INFO("Theta1: %f", theta_one - (PI / 2));
+    ROS_INFO("Theta2: %f", theta_two- (PI / 2));
+    ROS_INFO("Theta3: %f", theta_three- (PI / 2));
+    ROS_INFO("Theta4: %f", theta_four- (PI / 2));
+    ROS_INFO("Theta5: %f\n", theta_five- (PI / 2));
 
 
-    res.joints.first_joint = theta_one;
-    res.joints.second_joint = theta_two;
-    res.joints.third_joint = theta_three;
-    res.joints.fourth_joint = theta_four;
-    res.joints.fifth_joint = theta_five;
+    res.joints.first_joint = theta_one - (PI / 2.0);
+    res.joints.second_joint = theta_two- (PI / 2.0);
+    res.joints.third_joint = theta_three- (PI / 2.0);
+    res.joints.fourth_joint = theta_four- (PI / 2.0);
+    res.joints.fifth_joint = theta_five- (PI / 2.0);
     return true;
 }
 
