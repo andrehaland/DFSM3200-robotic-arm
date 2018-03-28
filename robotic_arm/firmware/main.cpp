@@ -21,11 +21,11 @@ Servo servo3;
 Servo servo4;
 Servo servo5;
 
-SpeedServo speed_servo1(&servo1, &nh, "/simple_robotic_model/joint2_position_controller/command");
-SpeedServo speed_servo2(&servo2, &nh, "/simple_robotic_model/joint3_position_controller/command");
-SpeedServo speed_servo3(&servo3, &nh, "/simple_robotic_model/joint4_position_controller/command");
-SpeedServo speed_servo4(&servo4, &nh, "/simple_robotic_model/joint5_position_controller/command");
-SpeedServo speed_servo5(&servo5, &nh, "/simple_robotic_model/joint6_position_controller/command");
+SpeedServo speed_servo1(&servo1, &nh, "/5dof_robot/joint2/command");
+SpeedServo speed_servo2(&servo2, &nh, "/5dof_robot/joint3/command");
+SpeedServo speed_servo3(&servo3, &nh, "/5dof_robot/joint4/command");
+SpeedServo speed_servo4(&servo4, &nh, "/5dof_robot/joint5/command");
+SpeedServo speed_servo5(&servo5, &nh, "/5dof_robot/joint6/command");
 
 
 void setup()
