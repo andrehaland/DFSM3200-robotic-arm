@@ -6,6 +6,7 @@ include (/opt/ros/kinetic/share/rosserial_arduino/arduino-cmake/cmake/Platform/A
 
 generate_arduino_firmware(robotic
 		SRCS main.cpp ${ROS_LIB_DIR}/time.cpp
-		BOARD uno
-  		PORT /dev/ttyUSB0
+		SpeedServo.h SpeedServo.cpp
+		BOARD mega2560
+		PORT /dev/ttyACM0
 )
