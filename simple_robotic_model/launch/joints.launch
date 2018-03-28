@@ -13,5 +13,6 @@
 																																																																	joint4_position_controller
 																																																																	joint5_position_controller
 																																																																	joint6_position_controller"/>
+																																																			<node pkg="controller" type="controller" name="controller"/>
 
 </launch>
