@@ -1,28 +1,28 @@
-simple_robotic_model:
+5dof_robot:
  # Publish all joint states
  joint_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 50
 
  # Position Controllers
- joint2_position_controller:
+ joint2:
   type: position_controllers/JointPositionController
   joint: second_joint
     # PID
- joint3_position_controller:
+ joint3:
   type: position_controllers/JointPositionController
   joint: third_joint
   # PID
- joint4_position_controller:
+ joint4:
   type: position_controllers/JointPositionController
   joint: fourth_joint
   # PID
- joint5_position_controller:
+ joint5:
   type: position_controllers/JointPositionController
   joint: fifth_joint
   # PID
 
- joint6_position_controller:
+ joint6:
   type: position_controllers/JointPositionController
   joint: sixth_joint
   # PID
