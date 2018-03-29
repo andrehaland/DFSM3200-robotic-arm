@@ -59,6 +59,6 @@ void SpeedServo::update()
 
 void SpeedServo::servoCallback(const std_msgs::Float64& angle)
 {
-    this->setDesired(static_cast<int>(angle.data));
-    //this->setDesired(static_cast<int>(conversion::radToDeg(angle.data)));
+    //this->setDesired(static_cast<int>(angle.data));
+    this->setDesired(static_cast<int>(conversion::radToDeg(angle.data + M_PI / 2.0)));
 }
