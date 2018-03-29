@@ -4,9 +4,11 @@
 #include <ros/ros.h>
 
 #include <geometry_msgs/Vector3.h>
+#include <std_msgs/Int16.h>
 #include <std_msgs/Float64MultiArray.h>
-#include <servo_msgs/JointAngles.h>
-#include "ik_srvs/CartesianToJoint.h"
+
+#include "Angles.h"
+
 
 class KinematicHandler
 {
@@ -19,14 +21,18 @@ public:
 
 		void kinematicCallback(const std_msgs::Float64MultiArray& joints);
 
+    void startPosCallback(const std_msgs::Int16& start);
+
+    void setStartPosition();
+
 private:
+    bool cartesion_recieved;
 
     ros::Time from_camera;
     ros::Time from_matlab;
 
     ros::NodeHandle* node_ptr;
 
-    ros::ServiceClient client;
 
 		ros::Publisher cartesian_publisher;
     ros::Publisher joint_publisher;
@@ -37,10 +43,8 @@ private:
 		ros::Publisher joint_publisher5;
 		ros::Publisher joint_publisher6;
 
-    ik_srvs::CartesianToJoint srv;
-
-    servo_msgs::JointAngles joints;
-
+    // Holds the last published angles
+    Angles angles;
 
 };
 #endif
