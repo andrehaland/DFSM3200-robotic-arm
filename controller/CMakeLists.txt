@@ -22,5 +22,5 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(controller src/controller.cpp src/KinematicHandler.h src/KinematicHandler.cpp)
+add_executable(controller src/controller.cpp src/KinematicHandler.h src/KinematicHandler.cpp src/Angles.h)
 target_link_libraries(controller ${catkin_LIBRARIES})
