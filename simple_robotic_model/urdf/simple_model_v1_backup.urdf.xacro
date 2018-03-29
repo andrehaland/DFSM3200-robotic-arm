@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+	<robot name="simple_model" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Include materials -->
+		<material name="Black">
+			<color rgba="0.5 0.0 0.0 1.0"/>
+		</material>
+
+		<material name="Red">
+			<color rgba="0.8 0.0 0.0 1.0"/>
+		</material>
+
+		<material name="White">
+			<color rgba="1.0 1.0 1.0 1.0"/>
+		</material>
+
+		<xacro:property name="deg_to_rad" value="0.01745329251994329577"/>
+
+		<!-- Define constants -->
+		<xacro:property name="M_PI" value="3.14159"/>
+		<xacro:property name="M_PI_HALVES" value="${M_PI / 2}"/>
+
+		<!-- Second link properties -->
+		<xacro:property name="link_len" value="0.1"/>
+		<xacro:property name="link_width" value="0.1"/>
+		<xacro:property name="link_height" value="0.2"/>
+
+		<xacro:macro name="inertial_matrix" params="mass">
+			<inertial>
+				<mass value="${mass}"/>
+				<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+			</inertial>
+		</xacro:macro>
+
+		<xacro:macro name="transmission_block" params="joint_name">
+			<transmission name="tran1">
+				<type>transmission_interface/SimpleTransmission</type>
+				<joint name="${joint_name}">
+					<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+				</joint>
+				<actuator name="motor1">
+					<hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+					<mechanicalReduction>1</mechanicalReduction>
+				</actuator>
+			</transmission>
+		</xacro:macro>
+	
+		<link name="world"/>
+
+		<!-- Base link -->
+		<link name="base_link">
+			<visual>
+				<origin xyz="0 0 0.05" rpy="0 0 0"/>
+				<geometry>
+					<box size="0.1 0.1 0.1"/>
+				</geometry>
+				<material name="White"/>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0.05" rpy="0 0 0"/>
+				<geometry>
+					<box size="0.1 0.1 0.1"/>
+				</geometry>
+			</collision>
+			<xacro:inertial_matrix mass="1"/>
+		</link>
+		<gazebo reference="base_link">
+			<material>Gazebo/Yellow</material>
+		</gazebo>
+
+		<link name="second_link">
+			<visual>
+				<origin xyz="0 0 ${link_height/2}" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_len} ${link_width} ${link_height}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 ${link_height/2}" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_len} ${link_width} ${link_height}"/>
+				</geometry>
+			</collision>
+		<xacro:inertial_matrix mass="1"/>
+		</link>
+		<gazebo reference="second_link">
+			<material>Gazebo/Green</material>
+		</gazebo>
+
+		<link name="third_link">
+			<visual>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</collision>
+		<xacro:inertial_matrix mass="1"/>
+		</link>
+		<gazebo reference="third_link">
+			<material>Gazebo/Blue</material>
+		</gazebo>
+
+		<link	name="fourth_link">
+			<visual>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</visual>
+			<collision>	
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</collision>
+		<xacro:inertial_matrix mass="1"/>
+		</link>
+		<gazebo reference="fourth_link">
+			<material>Gazebo/Pink</material>
+		</gazebo>
+
+		<link name="fifth_link">
+			<visual>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</collision>
+		<xacro:inertial_matrix mass="1"/>
+		</link>
+		<gazebo reference="fifth_link">
+			<material>Gazebo/Black</material>
+		</gazebo>
+
+		<link name="sixth_link">
+			<visual>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="${link_height/2} 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="${link_height} ${link_width} ${link_len}"/>
+				</geometry>
+			</collision>
+		<xacro:inertial_matrix mass="1"/>
+		</link>
+		<gazebo reference="sixth_link">
+			<material>Gazebo/Black</material>
+		</gazebo>
+
+		<link name="end_effector">
+			<visual>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="0.05 0.05 0.05"/>
+				</geometry>
+			</visual>
+			<collision>
+				<origin xyz="0 0 0" rpy="0 0 0"/>
+				<geometry>
+					<box size="0.05 0.05 0.05"/>
+				</geometry>
+			</collision>
+			<xacro:inertial_matrix mass="1"/>
+			</link>
+			<gazebo reference="end_effector">
+				<material>Gazebo/Blue</material>
+			</gazebo>
+
+
+		<joint name="fixed" type="fixed">
+			<parent link="world"/>
+			<child link="base_link"/>
+		</joint>
+
+		<joint name="second_joint" type="revolute">
+			<origin xyz="0 0 0.15" rpy="0 0 0"/>
+			<parent link="base_link"/>
+			<child link="second_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="300" velocity="1" lower="0" upper="${M_PI}"/>
+		</joint>
+
+		<joint name="third_joint" type="revolute">
+			<origin xyz="0 0 0.26" rpy="0 ${-M_PI_HALVES} 0"/>
+			<parent link="second_link"/>
+			<child link="third_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+		</joint>
+
+		<joint name="fourth_joint" type="revolute">
+			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<parent link="third_link"/>
+			<child link="fourth_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+		</joint>
+
+		<joint name="fifth_joint" type="revolute">
+			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<parent link="fourth_link"/>
+			<child link="fifth_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+		</joint>
+
+		<joint name="sixth_joint" type="revolute">
+			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<parent link="fifth_link"/>
+			<child link="sixth_link"/>
+			<axis xyz="0 0 1"/>
+			<limit effort="300" velocity="1" lower="${-M_PI_HALVES}" upper="${M_PI_HALVES}"/>
+		</joint>
+
+		<joint name="ee_joint" type="fixed">
+			<origin xyz="0.26 0 0" rpy="0 0 0"/>
+			<parent link="sixth_link"/>
+			<child link="end_effector"/>
+		</joint>
+
+		<xacro:transmission_block joint_name="second_joint"/>
+		<xacro:transmission_block joint_name="third_joint"/>
+		<xacro:transmission_block joint_name="fourth_joint"/>
+		<xacro:transmission_block joint_name="fifth_joint"/>
+		<xacro:transmission_block joint_name="sixth_joint"/>
+		
+		<gazebo>
+			<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+				<robotNamespace>/5dof_robot</robotNamespace>
+			</plugin>
+		</gazebo>
+	</robot>
