@@ -20,6 +20,8 @@ int main(int argc, char** argv)
 	// Setup subscriber to get the computed angles by MATLAB
 	ros::Subscriber kinematics = node_handle.subscribe("/MATLAB/kinematic_publisher", 100, &KinematicHandler::kinematicCallback, &kinematic);
 
+	ros::Subscriber start_position = node_handle.subscribe("start_pos", 100, &KinematicHandler::startPosCallback, &kinematic);
+
 	while(ros::ok())
 	{
 		ros::spinOnce();
