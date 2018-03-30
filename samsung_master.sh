@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###############################################################
+# This script is sourced on the Samsung to set the IP for the #
+# ROS master. It must be sourced in every terminal before     #
+# running any ROS target                                      #
+###############################################################
+
+
 # Get IP address of host
 IP=$(hostname -I)
 
