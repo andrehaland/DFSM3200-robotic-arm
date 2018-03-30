@@ -17,6 +17,7 @@ void SpeedServo::subscribe()
 
 void SpeedServo::write(int position)
 {
+    // Update object to remember positon, the write to motor
     m_current = position;
     m_servo->write(position);
 }
@@ -59,6 +60,6 @@ void SpeedServo::update()
 
 void SpeedServo::servoCallback(const std_msgs::Float64& angle)
 {
-    //this->setDesired(static_cast<int>(angle.data));
+    // Since servo motors has range of 0-180 degrees, PI/2 must be added followed by a conversion to degrees
     this->setDesired(static_cast<int>(conversion::radToDeg(angle.data + M_PI / 2.0)));
 }
