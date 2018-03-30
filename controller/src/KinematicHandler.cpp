@@ -5,9 +5,11 @@
 #include <iostream>
 #include <math.h>
 
+#define DEGREES_60 -0.523598776f
 #define DEGREES_50 -0.698131701f
 #define DEGREES_30 -1.0471975f
 #define DEGREES_40  -0.872664626f
+#define DEGREES_110 0.349065865f
 #define DEGREES_125 0.610865238f
 #define DEGREES_135  0.785398163f
 #define DEGREES_180 M_PI / 2.0
@@ -94,12 +96,12 @@ void KinematicHandler::setStartPosition()
 		newAngles.fourth = DEGREES_180;
 		joint.data = newAngles.fourth;
 		joint_publisher5.publish(joint);
-		ros::Duration(1.0).sleep();
+		ros::Duration(1.3).sleep();
 
 		newAngles.third = DEGREES_180;
 		joint.data = newAngles.third;
 		joint_publisher4.publish(joint);
-		ros::Duration(1.0).sleep();
+		ros::Duration(1.3).sleep();
 
 		// Set fourth joint oposite direction to shorten the length of arm
 		newAngles.fourth = DEGREES_90;
@@ -115,18 +117,18 @@ void KinematicHandler::setStartPosition()
 		joint.data = newAngles.third;
 		joint_publisher4.publish(joint);
     }
-    else if(angles.second >= DEGREES_125)
+    else if(angles.second >= DEGREES_110)
     {
 		//Set fourth joint
 		newAngles.fourth = DEGREES_0;
 		joint.data = newAngles.fourth;
 		joint_publisher5.publish(joint);
-		ros::Duration(1.0).sleep();
+		ros::Duration(1.3).sleep();
 
 		newAngles.third = DEGREES_0;
 		joint.data = newAngles.third;
 		joint_publisher4.publish(joint);
-		ros::Duration(1.0).sleep();
+		ros::Duration(1.3).sleep();
 
 		newAngles.fourth = DEGREES_90;
 		joint.data = newAngles.fourth;
