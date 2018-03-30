@@ -18,16 +18,16 @@
   <!-- Base link -->
   <link name="base_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.05"/>
+      <origin rpy="0 0 0" xyz="0 0 0.005"/>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <box size="0.1 0.1 0.01"/>
       </geometry>
       <material name="White"/>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.05"/>
+      <origin rpy="0 0 0" xyz="0 0 0.005"/>
       <geometry>
-        <box size="0.1 0.1 0.1"/>
+        <box size="0.1 0.1 0.01"/>
       </geometry>
     </collision>
     <inertial>
@@ -36,19 +36,36 @@
     </inertial>
   </link>
   <gazebo reference="base_link">
-    <material>Gazebo/Yellow</material>
+    <material>Gazebo/Black</material>
   </gazebo>
-  <link name="second_link">
+  <link name="second_joint_placeholder">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0.0095"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <cylinder length="0.021" radius="0.025"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.1"/>
+      <origin rpy="0 0 0" xyz="0 0 0.0095"/>
       <geometry>
-        <box size="0.1 0.1 0.2"/>
+        <cylinder length="0.021" radius="0.025"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="second_joint_placeholder">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <link name="second_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.039"/>
+      <geometry>
+        <box size="0.035 0.03 0.036"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.039"/>
+      <geometry>
+        <box size="0.035 0.03 0.036"/>
       </geometry>
     </collision>
     <inertial>
@@ -57,19 +74,36 @@
     </inertial>
   </link>
   <gazebo reference="second_link">
-    <material>Gazebo/Green</material>
+    <material>Gazebo/Black</material>
   </gazebo>
-  <link name="third_link">
+  <link name="third_joint_placeholder">
     <visual>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.025"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="1 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.025"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="third_joint_placeholder">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <link name="third_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.029 0.03 0.035"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.029 0.03 0.035"/>
       </geometry>
     </collision>
     <inertial>
@@ -78,19 +112,40 @@
     </inertial>
   </link>
   <gazebo reference="third_link">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Black</material>
   </gazebo>
-  <link name="fourth_link">
+  <link name="fourth_joint_placeholder">
     <visual>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.025"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.025"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  <gazebo reference="fourth_joint_placeholder">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <link name="fourth_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.069 0.03 0.035"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.069 0.03 0.035"/>
       </geometry>
     </collision>
     <inertial>
@@ -99,19 +154,40 @@
     </inertial>
   </link>
   <gazebo reference="fourth_link">
-    <material>Gazebo/Pink</material>
+    <material>Gazebo/Black</material>
   </gazebo>
-  <link name="fifth_link">
+  <link name="fifth_joint_placeholder">
     <visual>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.025"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.025"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+  <gazebo reference="fifth_joint_placeholder">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <link name="fifth_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.027 0.03 0.035"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.027 0.03 0.035"/>
       </geometry>
     </collision>
     <inertial>
@@ -122,17 +198,17 @@
   <gazebo reference="fifth_link">
     <material>Gazebo/Black</material>
   </gazebo>
-  <link name="sixth_link">
+  <link name="sixth_joint_placeholder">
     <visual>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.02"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0.1 0 0"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.2 0.1 0.1"/>
+        <cylinder length="0.05" radius="0.02"/>
       </geometry>
     </collision>
     <inertial>
@@ -140,20 +216,20 @@
       <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="1.0"/>
     </inertial>
   </link>
-  <gazebo reference="sixth_link">
-    <material>Gazebo/Black</material>
+  <gazebo reference="sixth_joint_placeholder">
+    <material>Gazebo/Orange</material>
   </gazebo>
   <link name="end_effector">
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.010 0.015"/>
       </geometry>
     </visual>
     <collision>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.02 0.010 0.015"/>
       </geometry>
     </collision>
     <inertial>
@@ -162,50 +238,71 @@
     </inertial>
   </link>
   <gazebo reference="end_effector">
-    <material>Gazebo/Blue</material>
+    <material>Gazebo/Black</material>
   </gazebo>
+  <!-- JOINTS -->
   <joint name="fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
   </joint>
   <joint name="second_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0 0 0.15"/>
+    <origin rpy="0 0 0" xyz="0 0 0.01"/>
     <parent link="base_link"/>
-    <child link="second_link"/>
+    <child link="second_joint_placeholder"/>
     <axis xyz="0 0 1"/>
     <limit effort="300" lower="0" upper="3.14159" velocity="1"/>
   </joint>
+  <joint name="second_fixed" type="fixed">
+    <parent link="second_joint_placeholder"/>
+    <child link="second_link"/>
+  </joint>
   <joint name="third_joint" type="revolute">
-    <origin rpy="0 -1.570795 0" xyz="0 0 0.26"/>
+    <origin rpy="0 -1.570795 0" xyz="0 0 0.076"/>
     <parent link="second_link"/>
-    <child link="third_link"/>
+    <child link="third_joint_placeholder"/>
     <axis xyz="0 0 1"/>
     <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
+  </joint>
+  <joint name="third_fixed" type="fixed">
+    <origin rpy="0 0 0" xyz="0.034 0 0"/>
+    <!-- Radius 0.03 -->
+    <parent link="third_joint_placeholder"/>
+    <child link="third_link"/>
   </joint>
   <joint name="fourth_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.26 0 0"/>
+    <origin rpy="0 0 0" xyz="0.035 0 0"/>
     <parent link="third_link"/>
-    <child link="fourth_link"/>
+    <child link="fourth_joint_placeholder"/>
     <axis xyz="0 0 1"/>
     <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
+  </joint>
+  <joint name="fourth_fixed" type="fixed">
+    <origin rpy="0 0 0" xyz="0.054 0 0"/>
+    <parent link="fourth_joint_placeholder"/>
+    <child link="fourth_link"/>
   </joint>
   <joint name="fifth_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.26 0 0"/>
+    <origin rpy="0 0 0" xyz="0.055 0 0"/>
     <parent link="fourth_link"/>
-    <child link="fifth_link"/>
+    <child link="fifth_joint_placeholder"/>
     <axis xyz="0 0 1"/>
     <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
+  <joint name="fifth_fixed" type="fixed">
+    <origin rpy="0 0 0" xyz="0.034 0 0"/>
+    <parent link="fifth_joint_placeholder"/>
+    <child link="fifth_link"/>
+  </joint>
   <joint name="sixth_joint" type="revolute">
-    <origin rpy="0 0 0" xyz="0.26 0 0"/>
+    <origin rpy="0 0 0" xyz="0.0275 0 0"/>
     <parent link="fifth_link"/>
-    <child link="sixth_link"/>
+    <child link="sixth_joint_placeholder"/>
     <axis xyz="0 0 1"/>
     <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
   <joint name="ee_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.26 0 0"/>
-    <parent link="sixth_link"/>
+    <origin rpy="0 0 0" xyz="0.029 0 0"/>
+    <parent link="sixth_joint_placeholder"/>
     <child link="end_effector"/>
   </joint>
   <transmission name="tran1">
@@ -260,7 +357,7 @@
   </transmission>
   <gazebo>
     <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
-      <robotNamespace>/simple_robotic_model</robotNamespace>
+      <robotNamespace>/5dof_robot</robotNamespace>
     </plugin>
   </gazebo>
 </robot>
