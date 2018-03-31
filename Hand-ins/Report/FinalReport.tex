@@ -33,7 +33,7 @@
 	
 	\subsection{Information flow}
 	
-	The flow of information in ARPA starts with the camera getting a Cartesian coordinate of a dot in the workspace of ARPA. This coordinate is sent to the controller which further sends it to MATLAB for processing. MATLAB returns five joints angles to the controller. These are the angles used to control both the physical arm and the Gazebo model. Hence, the controller publishes them to their respective topics, where they are picked up by both the Gazebo node and the 5DOF Robot node. Figure \ref{fig:seq-diagram} shows the flow of information in the form of a UML Sequence diagram.
+	The flow of information in ARPA starts with the camera getting a Cartesian coordinate of a dot in the workspace of ARPA. This coordinate is sent to the controller which further sends it to MATLAB for processing. MATLAB returns five joints angles to the controller. These are the angles used to control both the physical arm and the Gazebo model. Hence, the controller publishes them to their respective topics, where they are picked up by both the Gazebo node and the 5DOF Robot node. After the control node has sent the joint angles, it waits for 5 seconds before it sends a new set of joint angles used to set the physical and simulated arm back to starting position. Figure \ref{fig:seq-diagram} shows the flow of information in the form of a UML Sequence diagram.
 	
 	
 	\begin{figure}[ht]
