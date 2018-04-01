@@ -250,7 +250,7 @@
     <parent link="base_link"/>
     <child link="second_joint_placeholder"/>
     <axis xyz="0 0 1"/>
-    <limit effort="300" lower="0" upper="3.14159" velocity="1"/>
+    <limit effort="300" lower="-1.570795" upper="1.570795" velocity="1"/>
   </joint>
   <joint name="second_fixed" type="fixed">
     <parent link="second_joint_placeholder"/>

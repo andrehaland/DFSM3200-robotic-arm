@@ -15,12 +15,14 @@ ros::NodeHandle nh;
 // Sets the speed of the motors -- Lower numbers is faster
 const unsigned int NUM_TICKS = 350;
 
+// Initialize Servo objects
 Servo servo1;
 Servo servo2;
 Servo servo3;
 Servo servo4;
 Servo servo5;
 
+// Initialize SpeedServo objects
 SpeedServo speed_servo1(&servo1, &nh, "/5dof_robot/joint2/command");
 SpeedServo speed_servo2(&servo2, &nh, "/5dof_robot/joint3/command");
 SpeedServo speed_servo3(&servo3, &nh, "/5dof_robot/joint4/command");
@@ -52,47 +54,45 @@ void setup()
 	speed_servo3.subscribe();
 	speed_servo4.subscribe();
 	speed_servo5.subscribe();
-
 }
 
 
 void loop()
 {
+	// Update counter of every servo
 	speed_servo1.increment();
 	speed_servo2.increment();
 	speed_servo3.increment();
 	speed_servo4.increment();
 	speed_servo5.increment();
 	
+	// Update all servo motors
 	if(speed_servo1.counter() >= NUM_TICKS)
 	{
 		speed_servo1.update();
 		speed_servo1.resetCounter();
 	}
-
 	if(speed_servo2.counter() >= NUM_TICKS)
 	{
 		speed_servo2.update();
 		speed_servo2.resetCounter();
 	}
-	
 	if(speed_servo3.counter() >= NUM_TICKS)
 	{
 		speed_servo3.update();
 		speed_servo3.resetCounter();
 	}
-
 	if(speed_servo4.counter() >= NUM_TICKS)
 	{
 		speed_servo4.update();
 		speed_servo4.resetCounter();
 	}
-
 	if(speed_servo5.counter() >= NUM_TICKS)
 	{
 		speed_servo5.update();
 		speed_servo5.resetCounter();
 	}
 
+	// Handle callbacks
   	nh.spinOnce();
 }

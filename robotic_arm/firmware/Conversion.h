@@ -4,6 +4,9 @@
 #include <Arduino.h>
 
 
+/**
+ * Namespace contains simple conversion from radians to degrees and vice versa 
+ **/
 namespace conversion
 {
     float radToDeg(float rad)
