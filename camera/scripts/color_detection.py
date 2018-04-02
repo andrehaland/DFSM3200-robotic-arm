@@ -28,13 +28,11 @@ class ColorDetection():
 		lower_red = np.array([0, 50, 50])
 		upper_red = np.array([10, 255, 255])
 		mask0 = cv2.inRange(self.hsv, lower_red, upper_red)
-
 		lower_red = np.array([170, 50, 50])
 		upper_red = np.array([180, 255, 255])
 		mask1 = cv2.inRange(self.hsv, lower_red, upper_red)
-
 		mask = mask0 + mask1
-
+		
 		return mask
 
 	# Function to detect objects in the OpenCV frame
@@ -111,7 +109,6 @@ class ColorDetection():
 		tracker_x, tracker_y = 0, 0
 		count1, count2, count3 = 0, 0, 0
 		tracker_count = 0
-		
 		rospy.loginfo("Stabilizing picture ..")
 		for x in range(0, 50):
 			self._, self.frame = self.camera.read()
@@ -142,7 +139,6 @@ class ColorDetection():
 		
 		while not rospy.is_shutdown():
 			self.ready_camera()
-
 			temp = self.calibrate_coord_frame(self.red_mask)
 			if temp != None:
 				tracker_x = temp[0]
@@ -150,7 +146,6 @@ class ColorDetection():
 			
 			scaled_x = self.map_coordinate(tracker_x, x1, x2, 0, 0.19)
 			scaled_y = self.map_coordinate(tracker_y, y1, y3, 0, 0.26)
-
 			coordinates = Vector3()
 			coordinates.x = scaled_x
 			coordinates.y = scaled_y
