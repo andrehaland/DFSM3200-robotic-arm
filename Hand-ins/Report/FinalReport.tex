@@ -17,126 +17,36 @@
 	\tableofcontents
 	\newpage
 
-	\section{Abstract}
-	The abstract wraps up the content and contribution of your work. The following questions must be addresses in the Abstract:
-	\begin{enumerate}
-		\item What is/are the challenge(s)?
-		\item What do you propose to solve the challenge?
-		\item How the proposed system work (is suppose to)?
-		\item What kind of model is required by the proposed system?
-		\item What tools are required to build the proposed system?
-		\item How will the proposed system be demonstrated?
-	\end{enumerate}
-	
-	
-	\section{Introduction}
-	The introduction should discuss the following topics:
-	\begin{itemize}
-		\item background and motivation;
-		\item introduce the main contribution;
-		\item give a first insight of the work;
-		\item describe the tools;
-		\item describe the methodology;
-		\item present the content of the report.
-	\end{itemize}
-	
-	\subsection{Notes from class}
-	
-	\begin{itemize}
-		\item an extended version of the abstract
-		\item answer the same questions but more in detail
-	\end{itemize}
-
-	
-	\section{Related works}
-	This section should provide an overview of similar research projects, highlighting similarities and differences. The state of the art should be described, highlighting what is missing both from a market and technology point of views.
-	
-	\subsection{Notes from class}
-	
-	\begin{itemize}
-		\item Similar works that can be found on internet/articles
-		\begin{itemize}
-			\item google scholar
-			\item books
-			\item websites
-		\end{itemize}
-		\item link different works 
-		\item highlight what is missing in our opinion
-		\item what is different with respect to our project
-		\item relate own problem to other projects
-		\begin{itemize}
-			\item “This guy has done it this way”
-			\item “Here something is missing”
-			\item “What is different”
-		\end{itemize}
-	\end{itemize}
-	
+	%\section{Abstract}
+	%\section{Introduction}
+	%\section{Related works}
 	\section{System description}
-	This is the core of your report. The proposed system should be described here in detail. The following points should be described:
-	\begin{itemize}
-		\item system architecture (use block diagrams or UML Class diagrams to enrich your description, the more the better);
-		\item information flow (use flow charts or UML Sequence diagrams to enrich your description, the more the better);
-		\item model, the mathematical model should be described in detail;
-		\item control approach, the methodology should be described in detail;
-		\item user interface, the way how the user can interact with the system should be described in detail.
-	\end{itemize}
 	
-	\subsection{Notes from class}
+	\subsection{Architecture}
+	ARPA is divided into nodes. These nodes each has its own tasks and communicate with each other on different topics to exchange information. Figure \ref{fig:nodegraph} shows the nodes of ARPA, and the topics they communicate on. A circle represents a node, whilst a rectangle represents a topic. The controller node is the center of all actions. It handles the interface between the camera, MATLAB, the physical robotic arm and the model in gazebo. The camera node is currently just a mock-up which sends a Cartesian point in space to the controller. The MATLAB node handles inverse kinematics. It receives Cartesian coordinates from the controller, and sends back five joint angles. The 5DOF Robot node controls the physical robotic arm by writing received angles to the servo motors. The Gazebo node listens to the same topics as 5DOF Robot, and will simulate a robotic model with a 1:1 relationship with the physical arm.
 	
-	\begin{itemize}
-		\item system architecture: already have it from earlier lecture (block diagram)
-		\item information flow:
-		\begin{itemize}
-			\item flow chart
-			\item sequence diagram (UML)
-		\end{itemize}
-		\item describe model (kinematics)
-		\item control
-		\item user interface
-	\end{itemize}
+	\begin{figure}[ht]
+		\includegraphics[width=\linewidth]{../Diagrams/NodeGraph.png}
+		\caption{Node graph}
+		\label{fig:nodegraph}
+	\end{figure}
+	
+	\subsection{Information flow}
+	
+	The flow of information in ARPA starts with the camera getting a Cartesian coordinate of a dot in the workspace of ARPA. This coordinate is sent to the controller which further sends it to MATLAB for processing. MATLAB returns five joints angles to the controller. These are the angles used to control both the physical arm and the Gazebo model. Hence, the controller publishes them to their respective topics, where they are picked up by both the Gazebo node and the 5DOF Robot node. After the control node has sent the joint angles, it waits for 5 seconds before it sends a new set of joint angles used to set the physical and simulated arm back to starting position. Figure \ref{fig:seq-diagram} shows the flow of information in the form of a UML Sequence diagram.
 	
 	
+	\begin{figure}[ht]
+		\includegraphics[width=\linewidth]{../Diagrams/SequenceDiagram.png}
+		\caption{UML Sequence diagram}
+		\label{fig:seq-diagram}
+	\end{figure}
 	
-	\section{Simulation and experiments}
-	This session should describe and highlights the results of your work. The following sessions should be considered:
-	\begin{itemize}
-		\item study cases, identify different study cases to show how the system works;
-		\item diagrams and data plots, collect and show different data to support your contribution;
-		\item screenshots and photos, the user interaction and the system functionalities should be documented;
-		\item video, a demo video can be used to show the system functionalities (i.e. with respect to the selected case study);
-		\item survey, discuss how the user perceives the system (i.e. user friendly interface, feedback, …)
-	\end{itemize}
+	%\section{Simulation and experiments}
 	
-	\subsection{Notes from class}
+	%\section{Discussion}
 	
-	\begin{itemize}
-		\item show different study cases
-		\item screenshots from gazebo
-		\begin{itemize}
-			\item user interface
-		\end{itemize}
-		\item photos from real robot
-		\item video
-		\item survey user experience
-	\end{itemize}
+	%\section{Appendix}
 	
-	
-	
-	\section{Discussion}
-	In this section, you should wrap up the contribution of your work and highlight pros and cons (i.e. what is working well, what is not working). You should critically analyse the results that you have obtained (i.e. what each time plot means, what are the causes of certain emerging behaviour, …). This session should also contain your vision of the future, what comes next, how can the current work be improved.
-	
-	\subsection{Notes from class}
-	
-	\begin{itemize}
-		\item comment results
-		\item mention what is not working (if)
-		\item future work
-	\end{itemize}
-	
-	\section{Appendix}
-	\subsection{Note from class}
-	\begin{itemize}
-		\item link to github
-	\end{itemize}
 	
 \end{document}
