@@ -1,0 +1,5 @@
+<launch>
+	
+	<node name="inverse_kinematics" pkg="matlab" type="start_matlab.sh"/>
+
+</launch>
