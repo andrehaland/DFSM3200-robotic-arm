@@ -1,5 +1,10 @@
 <launch>
 	
-	<node name="inverse_kinematics" pkg="matlab" type="start_matlab.sh"/>
+	<node name="camera" pkg="camera" type="color_detection.py"/>
+	<node name="controller" pkg="controller" type="controller"/>
+
+	<node pkg="rosserial_python" type="serial_node.py" name="robotic_arm">
+	<param name="port" value="/dev/ttyACM0"/>
+	</node>
 
 </launch>

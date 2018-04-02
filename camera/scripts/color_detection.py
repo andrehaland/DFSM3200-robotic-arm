@@ -5,7 +5,6 @@ import cv2
 import numpy as np
 import time
 import rospy
-from std_msgs.msg import String
 from geometry_msgs.msg import Vector3
 
 class ColorDetection():
@@ -218,8 +217,8 @@ class ColorDetection():
 				tracker_x = temp[0]
 				tracker_y = temp[1]
 			
-			scaled_x = self.map_coordinate(tracker_x, x1, x2, 0, 0.21)
-			scaled_y = self.map_coordinate(tracker_y, y1, y3, 0, 0.25)
+			scaled_x = self.map_coordinate(tracker_x, x1, x2, 0, 0.19)
+			scaled_y = self.map_coordinate(tracker_y, y1, y3, 0, 0.26)
 
 			coordinates = Vector3()
 			coordinates.x = scaled_x
