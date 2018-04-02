@@ -42,11 +42,11 @@ void setup()
 	servo5.attach(6);
 
 	// Set servos to upright position
-	speed_servo1.write(90);
+	/*speed_servo1.write(90);
 	speed_servo2.write(90);
 	speed_servo3.write(90);
 	speed_servo4.write(90);
-	speed_servo5.write(90);
+	speed_servo5.write(90);*/
 
 	// Subscribe to joint topics
 	speed_servo1.subscribe();
@@ -84,6 +84,7 @@ void loop()
 	}
 	if(speed_servo4.counter() >= NUM_TICKS)
 	{
+	
 		speed_servo4.update();
 		speed_servo4.resetCounter();
 	}
@@ -92,6 +93,7 @@ void loop()
 		speed_servo5.update();
 		speed_servo5.resetCounter();
 	}
+	
 
 	// Handle callbacks
   	nh.spinOnce();
