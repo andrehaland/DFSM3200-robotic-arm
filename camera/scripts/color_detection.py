@@ -224,7 +224,7 @@ class ColorDetection():
 			coordinates.x = scaled_x
 			coordinates.y = scaled_y
 			coordinates.z = 0.10
-			rospy.loginfo(coordinates)
+			#rospy.loginfo(coordinates)
 			pub.publish(coordinates)
 			cv2.imshow('frame', self.frame)
 			
