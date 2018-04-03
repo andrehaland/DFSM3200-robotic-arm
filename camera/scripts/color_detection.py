@@ -171,7 +171,7 @@ class ColorDetection():
 			coordinates = Vector3()
 			coordinates.x = scaled_x
 			coordinates.y = scaled_y
-			coordinates.z = 0.11
+			coordinates.z = 0.15
 			rospy.loginfo(coordinates)
 			pub.publish(coordinates)
 			cv2.imshow('frame', self.frame)
