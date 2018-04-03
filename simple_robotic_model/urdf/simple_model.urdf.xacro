@@ -93,13 +93,13 @@
 		
 		<link name="second_link">
 			<visual>
-				<origin xyz="0 0 0.039" rpy="0 0 0"/>
+				<origin xyz="0 0 0.034" rpy="0 0 0"/>
 				<geometry>
 					<box size="${link_len} ${link_width} ${second_link_height}"/>
 				</geometry>
 			</visual>
 			<collision>
-				<origin xyz="0 0 0.039" rpy="0 0 0"/>
+				<origin xyz="0 0 0.034" rpy="0 0 0"/>
 				<geometry>
 					<box size="${link_len} ${link_width} ${second_link_height}"/>
 				</geometry>

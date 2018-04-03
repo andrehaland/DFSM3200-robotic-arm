@@ -14,13 +14,16 @@ int main(int argc, char** argv)
 	KinematicHandler kinematic(&node_handle);
 
 	// Setup subscriber to camera to get cartesian coordinates
-	ros::Subscriber camera = node_handle.subscribe("camera", 100, &KinematicHandler::cameraCallback, &kinematic);
+	ros::Subscriber camera = node_handle.subscribe("coordinates", 100, &KinematicHandler::cameraCallback, &kinematic);
 
 	// Setup subscriber to get the computed angles by MATLAB
 	ros::Subscriber kinematics = node_handle.subscribe("/MATLAB/kinematic_publisher", 100, &KinematicHandler::kinematicCallback, &kinematic);
 
 	// Setup subscriber used to test the set-start-position algorihm
 	ros::Subscriber start_position = node_handle.subscribe("start_pos", 100, &KinematicHandler::startPosCallback, &kinematic);
+
+	// Setup subscriber used to set the ready state of camera
+	ros::Subscriber cam_ready = node_handle.subscribe("camera_ready", 10, &KinematicHandler::cameraReadyCallback, &kinematic);
 
 	while(ros::ok())
 	{

@@ -6,6 +6,7 @@
 #include <geometry_msgs/Vector3.h>
 #include <std_msgs/Int16.h>
 #include <std_msgs/Float64MultiArray.h>
+#include <std_msgs/Bool.h>
 
 #include "Angles.h"
 
@@ -47,6 +48,11 @@ public:
      **/
     void startPosCallback(const std_msgs::Int16& start);
 
+    /**
+     * Subscriber used to set camera_ready member variable 
+     **/
+    void cameraReadyCallback(const std_msgs::Bool& ready);
+
 private:
     /**
      * To avoid bugs with the kinematic callback fucntion being called
@@ -74,7 +80,8 @@ private:
     /**
      * Publisher to send cartesian coordinates to MATLAB 
      **/
-		ros::Publisher cartesian_publisher;
+	ros::Publisher cartesian_publisher;
+
 
     /**
      * Topics used to publish to each joint 
@@ -90,6 +97,8 @@ private:
      * Used in set-start-position algorithm
      **/
     Angles angles;
+
+    bool camera_ready;
 
 };
 #endif
