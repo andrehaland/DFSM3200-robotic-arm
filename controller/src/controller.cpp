@@ -22,6 +22,9 @@ int main(int argc, char** argv)
 	// Setup subscriber used to test the set-start-position algorihm
 	ros::Subscriber start_position = node_handle.subscribe("start_pos", 100, &KinematicHandler::startPosCallback, &kinematic);
 
+	// Setup subscriber used to set the ready state of camera
+	ros::Subscriber cam_ready = node_handle.subscribe("camera_ready", 10, &KinematicHandler::cameraReadyCallback, &kinematic);
+
 	while(ros::ok())
 	{
 		ros::spinOnce();

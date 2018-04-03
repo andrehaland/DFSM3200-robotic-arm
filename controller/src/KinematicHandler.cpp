@@ -19,7 +19,9 @@
 #define DEGREES_90 0.0f
 
 
-KinematicHandler::KinematicHandler(ros::NodeHandle* nh) :from_camera(0), from_matlab(0), cartesion_recieved(false)
+KinematicHandler::KinematicHandler(ros::NodeHandle* nh) 
+ :from_camera(0), from_matlab(0),
+ cartesion_recieved(false), camera_ready(false)
 {
 	node_ptr = nh;
     
@@ -76,12 +78,16 @@ void KinematicHandler::kinematicCallback(const std_msgs::Float64MultiArray& join
 
 void KinematicHandler::cameraCallback(const geometry_msgs::Vector3& cartesian)
 {
+	if(!camera_ready)
+		return;
+
 	from_camera = ros::Time::now();
 	ROS_INFO("Controller recieved cartesian point from camera --> Sending them to MATLAB!");
 	
 	// Forward the cartesian coordinates to MATLAB
 	cartesian_publisher.publish(cartesian);
 	cartesion_recieved = true;
+	camera_ready = false;
 }
 
 void KinematicHandler::setStartPosition()
@@ -188,4 +194,10 @@ void KinematicHandler::startPosCallback(const std_msgs::Int16& start)
 	angles.fourth = DEGREES_90;
 	angles.fifth = DEGREES_90;
 	setStartPosition();
+}
+
+void KinematicHandler::cameraReadyCallback(const std_msgs::Bool& ready)
+{
+	ROS_INFO("Camera ready to read coordinates!");
+	camera_ready = ready.data;
 }

@@ -57,13 +57,13 @@
   </gazebo>
   <link name="second_link">
     <visual>
-      <origin rpy="0 0 0" xyz="0 0 0.039"/>
+      <origin rpy="0 0 0" xyz="0 0 0.034"/>
       <geometry>
         <box size="0.035 0.03 0.036"/>
       </geometry>
     </visual>
     <collision>
-      <origin rpy="0 0 0" xyz="0 0 0.039"/>
+      <origin rpy="0 0 0" xyz="0 0 0.034"/>
       <geometry>
         <box size="0.035 0.03 0.036"/>
       </geometry>
