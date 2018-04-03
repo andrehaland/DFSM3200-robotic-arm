@@ -285,7 +285,7 @@
 			<parent link="second_link"/>
 			<child link="third_joint_placeholder"/>
 			<axis xyz="0 0 1"/>
-			<limit effort="300" velocity="1" lower="${-M_PI / 4}" upper="${-M_PI / 4}"/>
+			<limit effort="300" velocity="1" lower="${-M_PI / 4}" upper="${M_PI / 4}"/>
 		</joint>
 
 		<joint name="third_fixed" type="fixed">
