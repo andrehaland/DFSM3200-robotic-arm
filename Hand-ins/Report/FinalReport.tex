@@ -93,6 +93,8 @@ Table \ref{hardware} shows a list of the hardware components used in ARPA. The r
 \end{longtable}
 \end{center}
 
+
+
 \subsubsection{Software dependencies}
 
 Table \ref{software} shows a list of the software dependencies for running ARPA.
@@ -165,6 +167,11 @@ The color-detection is done by applying a red mask in the HSV-colorspace on each
 \subsubsection{Controller}
 The controller package handles the interface between the other nodes. First of all, it receives all the coordinates from the camera node, but will only publish them to MATLAB if the \textit{ready.sh} script has been run. Optionally, a message containing 1 (true) can be published on the\textit{/camera\_ready} topic. After the controller has published the coordinates to MATLAB, it will receive a response in the form of five joint angles. These joint angles are further sent to their respective topics. Immediately after the angles are published, the controller sleeps for five seconds. During these five seconds, the robotic arm will have time to go to the given coordinates. After sleeping, the controller will start a function that sets the arm to a upright position, hereby referred to as the start position of the arm. It does so by rotating the top servos the opposite direction of the bottom servos, before it rotates the bottom servos. This is done because the torque of the bottom servos are to big to directly set all joints to start position. After approximately using three seconds to set the arm to start position, the controller is ready to get a new ready signal from the user.
 
+\subsubsection{Matlab}
+The matlab package is responsible for solving the inverse kinematics for ARPA. The matlab script contained in kinematics.m is integrated in the ROS environment through the Robotics System Toolbox, allowing Matlab to act as a standalone node in the graph. The script subscribes to the cartesian\_subscriber which receives messages from the camera. When messages are received, the callback is initialized which derives the inverse kinematics with a numerical approach.
+
+The inverse kinematics solver is based on a URDF model of the robot, which means it can return inverse kinematics for any given 5DOF robotic manipulator. The script publishes the derived values of $\theta_n$ in the form of a FLoat64MultiArray to the kinematic\_publisher, which in turn is subscribed to by the controller.
+
 \subsubsection{Robotic arm}
 The robotic arm package contains the software running on the Arduino to control the servo motors. The main task of this node is to receive joint angles from the controller, and set the servo motors to the correct position. To control the servo motors, the native servo library provided by Arduino is used.
 
@@ -172,9 +179,12 @@ Writing a joint angle directly to the servo motors makes the servos rotate at ma
 
 This package also contains the launch file running the controller, camera in addition to the robotic arm node. Refer to \textit{\ref{startup} Starting program} for how to use the launch file.
 	
+
+\subsubsection{Simple robotic model}
+The simple robotic model package contains the URDF/Xacro used to model the virtual representation of the robot. It contains one Xacro file, which is programmed, and the generated URDF file that is used in Gazebo. The launch files are located in the launch directory, where joints.launch is the master launch file. This file includes the generated URDF model aswell as it includes the gazebo.launch file. The joints.launch will also launch the matlab node. The YAML file simple\_robotic\_model.control in the config directory contains the configurations for the joint\_state\_controller, which handles position control of the joints of ARPA.
 	
-	\subsection{Information flow}
-	The flow of information in ARPA starts when the user sends a ready signal to the controller node. This signals that the controller will accept a Cartesian coordinate from the camera. This coordinate  further sent to MATLAB for processing. MATLAB returns five joints angles to the controller. These are the angles used to control both the physical arm and the Gazebo model. Hence, the controller publishes them to their respective topics, where they are picked up by both the Gazebo node and the 5DOF Robot node. After the control node has sent the joint angles, it waits for 5 seconds before it sends a new set of joint angles used to set the physical and simulated arm back to starting position. This process can be repeated by sending a new ready signal. Figure \ref{fig:seq-diagram} shows the flow of information in the form of a UML Sequence diagram.
+\subsection{Information flow}
+The flow of information in ARPA starts when the user sends a ready signal to the controller node. This signals that the controller will accept a Cartesian coordinate from the camera. This coordinate  further sent to MATLAB for processing. MATLAB returns five joints angles to the controller. These are the angles used to control both the physical arm and the Gazebo model. Hence, the controller publishes them to their respective topics, where they are picked up by both the Gazebo node and the 5DOF Robot node. After the control node has sent the joint angles, it waits for 5 seconds before it sends a new set of joint angles used to set the physical and simulated arm back to starting position. This process can be repeated by sending a new ready signal. Figure \ref{fig:seq-diagram} shows the flow of information in the form of a UML Sequence diagram.
 	
 	
 	\begin{figure}[H]
@@ -230,37 +240,28 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 	\end{figure}
 	
 	During the first tests of the robotic arm, we discovered that the torque would make the robot fall over. We decided to make a more stable mechanical rig, by attaching the robotic arm to a wooden rig. Figure \ref{fig:plank-rig} shows the process of making the wooden rig.
-	
-	\begin{figure}
-	\centering
-	
-	
-	\begin{subfigure}[t]{0.2\textwidth}
-		
-		\includegraphics[height=1.2in]{../Diagrams/plank1.jpg}
-		
-		
-	\end{subfigure}%
-	
-	\begin{subfigure}[t]{0.2\textwidth}
-		\centering
-		\includegraphics[height=1.2in]{../Diagrams/plank2.jpg}
-		
-	\end{subfigure}%
-	
-	\begin{subfigure}[t]{0.2\textwidth}
-		\includegraphics[height=1.2in]{../Diagrams/plank3.jpg}
-		
-	\end{subfigure}
-	
-	\begin{subfigure}[t]{0.2\textwidth}
-		\includegraphics[height=1.2in]{../Diagrams/plank4.jpg}
-		
-	\end{subfigure}
-	\caption{Process of making a wooden rig}
-	\label{fig:plank-rig}	
-	\end{figure}
-	
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\textwidth]{../Diagrams/plank1.jpg}
+\caption{Planning}                		
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\textwidth]{../Diagrams/plank2.jpg}  
+\caption{Adjusting}              		
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\textwidth]{../Diagrams/plank3.jpg}  
+\caption{Assembly}              		
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\textwidth]{../Diagrams/plank4.jpg}  
+\caption{Finished}              		
+\end{subfigure}
+\caption{Process of making the wooden rig}
+\end{figure}
+
 	\subsubsection{Power supply}
 	The servo motors are running nominally at 6V. As the arm consists of five motors, we could not power them all from the Arduino. We decided to buy battery holders to run 4 AA batteries in series. Since an AA battery is 1.5V, running four of them in series adds up to 6V.
 	
@@ -286,18 +287,24 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 	
 	
 	%\section{Discussion}
-	
-	\section{Appendix}
-	
-	\subsection{References}
-	Arduino libraries: https://www.arduino.cc/en/Reference/Libraries
-	
 
+
+
+\appendix
+\section{Complete kinematic solution}
+% the \\ insures the section title is centered below the phrase: AppendixA
+
+Text of Appendix A is Here
+	
+\newpage	
+	
 \begin{thebibliography}{1}
 
 \bibitem{berge2015} Aslak Berge. Avhengig av polske kniver. \textit{http://ilaks.no/avhengig-av-polske-kniver-2/}. Aug 2018.
 
 \bibitem{digre2014} Hanne Digre. Lønnsom foredling av sjømat i Norge. 2014.
+
+\bibitem{arduino} Arduino. Arduino libraries. \textit{https://www.arduino.cc/en/Reference/Libraries}
 
 \end{thebibliography}	
 	
