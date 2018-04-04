@@ -290,8 +290,22 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 	\subsection{Initial modeling}
 	The next experiment in the project was to get a simple robotic model visualized in Gazebo. Through guidance in \cite{joseph2015}, we were able to get a simple representation of the robotic arm with the correct amount of joints and links, but without precise D-H parameters. We managed to make this model subscribe to the same topics subscribed to by the Arduino so the joints in the simulated world received the same messages as the servo motors on the physical robot.
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\linewidth]{../Diagrams/URDF-first.png}
+		\caption{Geometric representation}
+		\label{fig:geometric}
+	\end{figure}
+	
 	\subsection{Inverse kinematics}
-	To convert Cartesian coordinates to joint space, we needed to find the inverse kinematics of the robotic arm. We used a symbolic approach to first derive the forward equation of the geometric representation shown in figure \textbf{REF FIG} follow by the solving of the inverse kinematics. The resulting equations for $\theta_1,\,\theta_2,\,\theta_3,\,\theta_4,\,\theta_5$ are below. The mathematics in its entirety is appended as \textbf{REF APPENDIX}.
+	To convert Cartesian coordinates to joint space, we needed to find the inverse kinematics of the robotic arm. We used a symbolic approach to first derive the forward equation of the geometric representation shown in figure \ref{geometric} follow by the solving of the inverse kinematics. The resulting equations for $\theta_1,\,\theta_2,\,\theta_3,\,\theta_4,\,\theta_5$ are shown below. The mathematics in its entirety is appended as \textbf{REF APPENDIX}.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.3\linewidth]{../Diagrams/Model.png}
+		\caption{Geometric representation}
+		\label{fig:geometric}
+	\end{figure}
 	
 	\begin{align*}
 \theta_1 &= 2\mathrm{atan}\left(\frac{p_x \pm \sqrt{-d_2^2 + p_x^2 +p_y^2}}{d_2 - p_y}\right). \\[10pt]
@@ -312,23 +326,62 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 \end{cases}
 \end{align*}
 
-We spent quite some time on trying to implement these equations to control the model in Gazebo, but unfortunately we did not get it to work. 
-	
-	\subsection{Synchronization}
-	
+We spent quite some time trying to implement these equations to control the model in Gazebo, but unfortunately we did not get it to work. This lead to looking into ROS packages that could solve it for us. After failing to integrate both MoveIt! and  IKFast, we decided to go for another solution. Robotics System Toolbox, a add-on for MATLAB, can solve the inverse kinematics when given a URDF file, so we decided to create a MATLAB node which solved the inverse kinematics. The downside with this approach is that is a numerical solver, meaning it is quite slow.
+
 	\subsection{D-H parameters}
+	To get a model with the same link- and joint parameters as the physical robot, we measured the robot and made a new URDF model. The final model can be seen in figure \ref{fig:urdf-final}, whilst the D-H parameters can be seen in table \ref{DH-table}.
 	
-	\subsection{}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.7\linewidth]{../Diagrams/URDF-final.png}
+		\caption{Final model}
+		\label{fig:urdf-final}
+	\end{figure}
+	
+	\begin{center}           
+    \begin{longtable}{| c | c | c | c | c |}
+              \hline
+                       
+\multicolumn{5}{|c|}{\textbf{DH-table}} \\ \hline \endhead
+\textit{Link} & \textbf{$a$} & \textbf{$\alpha$} & $d$ & \textbf{$\theta$} \\ \hline             
+               1 & 0 & 0 &  0 & $\theta_1$ \\ \hline
+               2 & 0 & 90 & 3 cm & $\theta_2$ \\ \hline
+               3 & 7.5 cm & 0 & 0 & $\theta_3$ \\ \hline
+               4 & 11.5 cm & 0 & 0 & $\theta_4$ \\ \hline
+               5 & 7.3 cm & 0 & 0 & $\theta_5$ \\ \hline
+               6 & 2.5 cm & 0 & 0 & 0 \\ \hline
+               
+\caption{DH table}
+\label{DH-table}                                       
+\end{longtable}
+\end{center}
+
+	\subsection{Synchronization}
+	The next step to the process was to synchronize the speed of the real robot and the simulated model. In this experiment, we ran the physical robot alongside with the Gazebo model and adjusted parameters to get synchronized movement. Figure \ref{synch} shows the setup used to compare the speed of the model and the physical robot. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{../Diagrams/Synchronizing.png}
+		\caption{Synchronization}
+		\label{synch}
+	\end{figure}
 	
 	
-	%\section{Discussion}
+	\subsection{Final case study}
+	The final case study of ARPA included setting up the system in its entirety. The main goal was to place red markers around in the workspace of ARPA, then send a ready signal to the controller and allow ARPA move to the red marker. We achieved a 1:1 relationship between the physical robot and the simulated model, and were satisfied with the result of the final case study. Figure \ref{fig:three-split} shows the setup with the different views of the final case study.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{../Diagrams/ThreeSplit.png}
+		\caption{Final case study}
+		\label{fig:three-split}
+	\end{figure}
 	
-	\section{Appendix}
-	
-	\subsection{References}
-	Arduino libraries: https://www.arduino.cc/en/Reference/Libraries
+	\section{Discussion}
 	
 
+	
+	
+\newpage
 \begin{thebibliography}{1}
 
 \bibitem{berge2015} Aslak Berge. Avhengig av polske kniver. \textit{http://ilaks.no/avhengig-av-polske-kniver-2/}. Aug 2018.
@@ -340,6 +393,9 @@ We spent quite some time on trying to implement these equations to control the m
 
 \bibitem{joseph2015} Lentin Joseph. Mastering ROS for Robotics Programming. Des 2015
 
-\end{thebibliography}	
+\end{thebibliography}
+\newpage	
 	
+		\section{Appendix}
+
 \end{document}
