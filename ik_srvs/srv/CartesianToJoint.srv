@@ -1,3 +1,0 @@
-geometry_msgs/Vector3 cartesian
----
-servo_msgs/JointAngles joints

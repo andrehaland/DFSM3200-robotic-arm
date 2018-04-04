@@ -1,5 +1,0 @@
-float64 first_joint
-float64 second_joint
-float64 third_joint
-float64 fourth_joint
-float64 fifth_joint
