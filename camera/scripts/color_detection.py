@@ -6,6 +6,12 @@ import time
 import rospy
 from geometry_msgs.msg import Vector3
 
+
+'''
+Class containing the functionalities for object detection through internal or external camera.
+The script uses OpenCV and masks frames of live video to detect red objects appearing in the 
+camera frame.
+'''
 class ColorDetection():
 
 	camera = None
@@ -16,14 +22,7 @@ class ColorDetection():
 		print('Initializing camera..')
 		self.camera = cv2.VideoCapture(1)
 
-	# Function to set color masks for the different colors used
-	def set_color_mask(self, mask, lower, upper):
-		mask = cv2.inRange(self.hsv, lower, upper)
-		mask = cv2.erode(mask, None, iterations = 50)
-		mask = cv2.dilate(mask, None, iterations = 50)
-		
-		return mask
-	
+        # Set values for the HSV-ranges used to mask red in OpenCV	
 	def set_red_mask(self):
 		lower_red = np.array([0, 50, 50])
 		upper_red = np.array([10, 255, 255])
@@ -35,7 +34,7 @@ class ColorDetection():
 
 		return mask
 
-	# Function to define the four corners of the coordinate frame based on four colors
+	# Find contours of red marker in OpenCV image
 	def calibrate_coord_frame(self, mask):
 		contours = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
 		center = None
@@ -52,7 +51,7 @@ class ColorDetection():
 		
                 return center
 	
-	# Function to map coordinates from OpenCV frame to real coordinates
+	# Map coordinates from OpenCV frame to real coordinates
 	def map_coordinate(self, desired, cv_min, cv_max, real_min, real_max):
 		cv_span = cv_max - cv_min
 		real_span = real_max - real_min
@@ -60,6 +59,7 @@ class ColorDetection():
 
 		return real_min + (desired_scaled * real_max)
 
+        # Run script
 	def run(self):
 		x1, y1 = 0, 0
 		x2, y2 = 0, 0
@@ -102,6 +102,7 @@ class ColorDetection():
 			x1 = x1 / count1
 			y1 = y1 / count1
 	
+                # Read reference for X-max
 		print("Place marker for x-reference")
 		time.sleep(5000.0 / 1000.0)
 		
@@ -125,6 +126,7 @@ class ColorDetection():
 			x2 = x2 / count2
 			y2 = y2 / count2
 
+                # Read reference for Y-max
 		print("Place marker for y-reference")
 		time.sleep(5000.0 / 1000.0)
 
@@ -153,9 +155,10 @@ class ColorDetection():
 		print("Y-reference: ", x3, y3)
 		pub = rospy.Publisher('coordinates', Vector3, queue_size = 10)
 		rospy.init_node('camera_feed', anonymous = True)
+                # Change the ROS-rate, note that a lower rate will result in a more laggy camera feed
 		rate = rospy.Rate(10)
 		
-
+                # Detect red markers
 		while not rospy.is_shutdown():
 			self._, self.frame = self.camera.read()
 			self.hsv = cv2.cvtColor(self.frame, cv2.COLOR_BGR2HSV)
@@ -165,7 +168,9 @@ class ColorDetection():
 			if temp != None:
 				tracker_x = temp[0]
 				tracker_y = temp[1]
-			
+		        
+                        # If physical coordinate frame is changed, the constants here needs to be changed to 
+                        # appropriate values
 			scaled_x = self.map_coordinate(tracker_x, x1, x2, 0, 0.19)
 			scaled_y = self.map_coordinate(tracker_y, y1, y3, 0, 0.26)
 			coordinates = Vector3()
