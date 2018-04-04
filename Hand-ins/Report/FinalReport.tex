@@ -109,16 +109,32 @@ The idea of ARPA is to have a 1:1 relationship between a physical robotic arm, a
 	
 As described in \textbf{todo: refer to XX}, we had some challenges with finding the inverse kinematics and have to depend on the Robotics System Toolbox from MATLAB. When running MATLAB as a ROS node, we discovered that it ran quite slowly together with Gazebo. For this reason, we decided to run the ROS network over two computers to separate computing power. This is done by setting a couple of environmental variables in every terminal that uses ROS. Two shell scripts were made for this, and can be sourced to achieve the distributed ROS network. The different colored nodes in figure \ref{fig:nodegraph} represents which computer the node runs on.
 
-\subsubsection{Camera}
-The camera package contains the python-script that is responsible for handling object detection in ARPA. By placing red markers in the physical coordinate system of ARPA, the user will be able to track the markers with the live video feed from OpenCV. The script will after calibration continuously map received coordinates from the OpenCV coordinate frame to coordinates corresponding to the physical coordinate frame on the rig. The calibration and usage during runtime will be elaborated in finer detail in \textbf{XX: SECTION}.
-
-The color-detection is done by applying a red mask in the HSV-colorspace on each frame from the live video. By finding the contours of the image the marker can be detected and the script further finds the center of the detected point. The script is incorporated in the ROS environment as a node that publishes the mapped cartesian x and y coordinates of a desired point. The script can be extended to detect more colors by adding additional
-	
 	\begin{figure}[H]
 		\includegraphics[width=\linewidth]{../Diagrams/NodeGraph-v1.png}
 		\caption{Node graph}
 		\label{fig:nodegraph}
 	\end{figure}
+	
+
+The nodes previously described is made by ROS packages. Figure \ref{fig:dir-list} shows the packages used in ARPA. The following subsections will describe each package, including why and how they are implemented.
+
+	\begin{figure}[H]
+		\includegraphics[width=\linewidth]{../Diagrams/Packages.png}
+		\caption{Packages}
+		\label{fig:dir-list}
+	\end{figure}
+	
+	
+\subsubsection{Camera}
+The camera package contains the python-script that is responsible for handling object detection in ARPA. By placing red markers in the physical coordinate system of ARPA, the user will be able to track the markers with the live video feed from OpenCV. The script will after calibration continuously map received coordinates from the OpenCV coordinate frame to coordinates corresponding to the physical coordinate frame on the rig. The calibration and usage during runtime will be elaborated in finer detail in \textbf{XX: SECTION}.
+
+The color-detection is done by applying a red mask in the HSV-colorspace on each frame from the live video. By finding the contours of the image the marker can be detected and the script further finds the center of the detected point. The script is incorporated in the ROS environment as a node that publishes the mapped cartesian x and y coordinates of a desired point. The script can be extended to detect more colors by adding additional
+
+\subsubsection{Controller}
+The controller package handles the interface between the other nodes. First of all, it receives all the coordinates from the camera node, but will only publish them to MATLAB if the \textit{ready.sh} script has been run. Optionally, a message containing 1 (true) can be published on the\textit{/camera\_ready} topic. After the controller has published the coordinates to MATLAB, it will receive a response in the form of five joint angles. These joint angles are further sent to their respective topics. Immediately after the angles are published, the controller sleeps for five seconds. During these five seconds, the robotic arm will have time to go to the given coordinates. After sleeping, the controller will start a function that sets the arm to a upright position, hereby referred to as the start position of the arm. It does so by rotating the top servos the opposite direction of the bottom servos, before it rotates the bottom servos. This is done because the torque of the bottom servos are to big to directly set all joints to start position. After approximately using three seconds to set the arm to start position, the controller is ready to get a new ready signal from the user.
+
+\subsubsection{Robotic arm}
+The robotic arm package contains the code run on the Arduino.
 	
 	
 	
