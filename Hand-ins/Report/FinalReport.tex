@@ -243,14 +243,50 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 	
 		
 	\section{Simulation and experiments}
+	\label{simex}
 	Since the project has served as a introduction to many new tools, we have had several experiment along the way to learn how to use these tools. This section will go through the simulations and experiments we have conducted during the course of the project.
 	
 	\subsection{Arduino knob}
 	The first experiment was to learn how to control the servo motors. We had a couple of approaches, one being to control the servo motors by the output of a potentiometer. It was a quick process, and we moved onto bigger challenges.
 	
 	\subsection{ROS Turtlesim}
-	The next stage in the project was to learn the ROS ecosystem. ROS has quite a steep learning curve, and much time spent into just getting basic understanding of all the fundamentals. One specific experiment was the turtlesim tutorial found in . This tutorial gave a good insight into the ROS graph concept, i.e. the separation of functionality into nodes.
+	The next stage in the project was to learn the ROS ecosystem. ROS has quite a steep learning curve, and much time spent into just getting basic understanding of all the fundamentals. One specific experiment was the turtlesim tutorial found in \cite{turtle2017}. This tutorial gave a good insight into the ROS graph concept, i.e. the separation of functionality into nodes.
 	
+	\subsection{Arduino subscriber}
+	After getting a grip of the basics in ROS, we went on to integrating the Arduino Mega2560 into the ROS node network. The goal of this experiment was to setup a subscriber on the Arduino which receives a joint angle that it writes to a servo motor. This experiment was successful as we managed to rotate the servo by publishing a message from the terminal on the computer.
+	
+	\subsection{Initial modeling}
+	The next experiment in the project was to get a simple robotic model visualized in Gazebo. Through guidance in \cite{joseph2015}, we were able to get a simple representation of the robotic arm with the correct amount of joints and links, but without precise D-H parameters. We managed to make this model subscribe to the same topics subscribed to by the Arduino so the joints in the simulated world received the same messages as the servo motors on the physical robot.
+	
+	\subsection{Inverse kinematics}
+	To convert Cartesian coordinates to joint space, we needed to find the inverse kinematics of the robotic arm. We used a symbolic approach to first derive the forward equation of the geometric representation shown in figure \textbf{REF FIG} follow by the solving of the inverse kinematics. The resulting equations for $\theta_1,\,\theta_2,\,\theta_3,\,\theta_4,\,\theta_5$ are below. The mathematics in its entirety is appended as \textbf{REF APPENDIX}.
+	
+	\begin{align*}
+\theta_1 &= 2\mathrm{atan}\left(\frac{p_x \pm \sqrt{-d_2^2 + p_x^2 +p_y^2}}{d_2 - p_y}\right). \\[10pt]
+\theta_2 &= 2\,\mathrm{atan}\left(\frac{a_z \pm \sqrt{a_x^2c_{\theta_1}^2+2a_xa_yc_{\theta_1}s_{\theta_1}+a_y^2s_{\theta_1}^2+a_z^2}}{a_xc_{\theta_1} + a_ys_{\theta_1}}\right) \\[10pt]
+\theta_3 &= 
+\begin{cases}
+-2\,\mathrm{atan}\left(\frac{\sqrt{a_x^2c_{\theta_1}^2 + s_{2\theta_1}a_xa_y-a_y^2c_{\theta_1}^2 + a_y^2 + a_z^2} - a_zc_{\theta_2}+a_xc_{\theta_1}s_{\theta_2}+a_ys_{\theta_1}s_{\theta_2}}{a_zs_{\theta_2} + a_xc_{\theta_1}c_{\theta_2} + a_yc_{\theta_2}s_{\theta_1}}\right) \\[10pt]
+2\,\mathrm{atan}\left(\frac{\sqrt{a_x^2c_{\theta_1}^2 + s_{2\theta_1}a_xa_y-a_y^2c_{\theta_1}^2 + a_y^2 + a_z^2} + a_zc_{\theta_2} - a_xc_{\theta_1}s_{\theta_2} - a_ys_{\theta_1}s_{\theta_2}}{a_zs_{\theta_2} + a_xc_{\theta_1}c_{\theta_2} + a_yc_{\theta_2}s_{\theta_1}}\right)
+\end{cases} \\[10pt]
+\theta_4 &= \begin{cases}
+-\theta_2 - \theta_3 - \mathrm{asin}\left(\frac{d_1 - p_z + a_6n_z + a_4s_{\theta_{23}} + a_3s_{\theta_2}}{a_5}\right) \\[5pt]
+\pi -\theta_2 - \theta_3 - \mathrm{asin}\left(\frac{d_1 - p_z + a_6n_z + a_4s_{\theta_{23}} + a_3s_{\theta_2}}{a_5}\right).
+\end{cases} \\[10pt]
+\theta_5 &= 
+\begin{cases}
+-\theta_3 - \theta_4 - \mathrm{asin}(n_xc_{\theta_1}s_{\theta_2} - n_zc_{\theta_2} + n_ys_{\theta_1}s_{\theta_2}) \\[5pt]
+\pi - \theta_4 - \theta_3 - \mathrm{asin}(n_xc_{\theta_1}s_{\theta_2} - n_zc_{\theta_2} + n_ys_{\theta_1}s_{\theta_2}).
+\end{cases}
+\end{align*}
+
+We spent quite some time on trying to implement these equations to control the model in Gazebo, but unfortunately we did not get it to work. 
+	
+	\subsection{Synchronization}
+	
+	\subsection{D-H parameters}
+	
+	\subsection{}
 	
 	
 	%\section{Discussion}
@@ -266,6 +302,11 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 \bibitem{berge2015} Aslak Berge. Avhengig av polske kniver. \textit{http://ilaks.no/avhengig-av-polske-kniver-2/}. Aug 2018.
 
 \bibitem{digre2014} Hanne Digre. Lønnsom foredling av sjømat i Norge. 2014.
+
+\bibitem{turtle2017} Open Source Robotics Foundation. Understanding ROS Nodes.
+\textit{http://wiki.ros.org/ROS/Tutorials/UnderstandingNodes}. Aug 2017.
+
+\bibitem{joseph2015} Lentin Joseph. Mastering ROS for Robotics Programming. Des 2015
 
 \end{thebibliography}	
 	
