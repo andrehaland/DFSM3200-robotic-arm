@@ -1,5 +1,5 @@
 \documentclass[11pt,a4paper, titlepage]{article}
-
+\usepackage[width=16.00cm, left=2.50cm, top=2.5cm, bottom=2.5cm]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb}
 \usepackage{graphicx,wrapfig}
@@ -12,13 +12,15 @@
 \usepackage{amsfonts}
 \usepackage{subcaption}
 \usepackage[toc,page]{appendix}
-
+\usepackage{fancyhdr} 
+\pagestyle{fancy}
 \renewcommand{\baselinestretch}{1.5}
-
-\usepackage[width=16.00cm, left=2.50cm, top=2.5cm, bottom=2.5cm]{geometry}
 
 \title{ARPA: Autonomous Robotic Pointer Arm}
 \author{Helgerud, Erlend \and Håland, André}
+
+\lhead{DFSM3200 - Simulation and Modelling}
+\rhead{ARPA: Autonomous Robotic Pointer Arm}
 
 \begin{document}
 	\setlength\parindent{0pt}
@@ -29,6 +31,7 @@
 	\setlength{33pt}{}
 	\setcounter{secnumdepth}{4}
 	\maketitle
+	\pagenumbering{roman}
 	
 \begin{abstract}
 This report is written as part of a project in the course DFMS3200 - Simulation and Modelling at the University College of South-Eastern Norway. The background for the project is the idea of automation in industrial production lines in order to minimize costs and increase productivity. The solution proposed is an autonomous 5DOF robotic manipulator that perform actions based on a live video feed. The main focus of the project is to serve as a introductory case-study in robotic manipulation and control, and therein the usage of selected tools. The project is split in two, virtual simulation and physical representation. For controlling both the virtual and physical representation, the project utilizes ROS Kinetic (Robotic Operating System) in Ubuntu 16.04 with the majority of code written in C++. The physical robot is powered by 12 AA batteries together with two Arduino MEGA2560's. The vision system is based in Python 2.6 and OpenCV2. In order to provide the virtual representation the project incorporates Gazebo together with needed models written in URDF/Xacro and configurations written in YAML. Kinematics are handled in Matlab's Robotics System Toolbox. As a final demonstration, the separate components of the project will be run with a 1:1 relationship between the virtual and physical representations, integrating all components of the project.
@@ -36,7 +39,11 @@ This report is written as part of a project in the course DFMS3200 - Simulation 
 	
 	\tableofcontents
 	\newpage
-
+	\listoffigures
+	\newpage
+	\listoftables
+	\newpage
+\pagenumbering{arabic}
 \section{Introduction}
 As a result of the high average of salaries in Norway a lot of the processing of food is outsourced to countries with a lower average salary \cite{berge2015}. An example is the outsourcing of processing of Norwegian salmon to Poland, which has a lower hourly rate of work by 13.5\% compared to Norway. A direct consequence of the difference is that companies like Marine Harvest export roughly processed salmon to Poland, and import fine processed salmon back to Norway \cite{digre2014}. To be able to preserve the processing of fish in Norway, there is a demand for a system that can remove defects such as blood and/or melanin defects from the surface of fish fillets.
 
@@ -57,6 +64,8 @@ The following goals were set for the project:
 	
 \end{itemize}
 
+
+\newpage
 \subsection{Contributions}
 The project aims to contribute an environment consisting of a physical 5DOF robotic manipulator with a 1:1 relationship to a virtual simulation which can be used for rapid prototyping and testing. The system has incorporated a detection system to automate the process of finding markers. In addition, the delivered report and GitHub repository should serve as a contribution to student inheriting the project at a later stage.
 
@@ -99,9 +108,6 @@ Table \ref{hardware} shows a list of the hardware components used in ARPA. The r
 \subsubsection{Software dependencies}
 
 Table \ref{software} shows a list of the software dependencies for running ARPA.
-
-\newpage
-
 	\begin{center}           
     \begin{longtable}{| l | l |}
               \hline
@@ -125,9 +131,23 @@ Table \ref{software} shows a list of the software dependencies for running ARPA.
 \end{longtable}
 \end{center}     
 
-\subsection{Content}
-In addition to the introduction, this report consists of \textbf{\ref{relwork}: Related works}, \textbf{\ref{description}: System description}, \textbf{\ref{simex}: Simulations and experiments} and \textbf{\ref{discussion}: Discussion}
+The choice of using ROS was made quite quickly, both due to a good pitch from the supervisor, but also by discussing the actual value of learning it. Since both participants of the project are conducting the bachelor's thesis in parallel with this project, the learning outcome of ROS was evaluated to be highly relevant for our other projects aswell.
 
+When choosing the simulation environment for the project, we focused mainly on the return of investment in terms of learning the simulation environment. In addition to this it was important that the chosen environment had support for Arduino. A last factor was that we needed a software which was free, or atleast had free student licenses. In general, we decided that we wanted to use ROS (Robotic Operating System) as the robotic framework for our system. As a result, the simulation environment to be used had to support ROS. \textit{Figure \ref{fig:compare}} shows a comparison chart of the environments discussed in the group.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{../Diagrams/ComparisonSim}
+\caption{Comparison chart for simulation environments}
+\label{fig:compare}
+\end{figure}
+
+In the process of choosing the simulation environment, we mainly discussed V-Rep and Gazebo. Since we established the fact that we wanted to use ROS, the most natural choice for the environment became Gazebo, since this is maintained with ROS. We also considered the return of investment in terms of future usage. The two factors which kept us hesitant when deciding for ROS was that it is Linux based (none of the group members had computers set up with Linux), and the fact that we were informed by the teacher in the subject that the learning curve is steep. The challenge with no Linux-based computers was solved by installing Linux on two old computers. 
+
+\subsection{Content}
+In addition to the introduction, this report consists of \textbf{\ref{relwork}: Related works}, \textbf{\ref{description}: System description}, \textbf{\ref{simex}: Simulations and experiments} and \textbf{\ref{discussion}: Discussion}.
+
+\newpage
 \section{Related works}
 \label{relwork}
 Robotics is a wide field, and many projects have been conducted. This ection will compare some related work to this project.
@@ -154,6 +174,7 @@ The work in this report is conducted by Abdellatif Baba. Need for help systems i
 \end{center}
 
 
+\newpage
 \subsection{Anthropomorphic Robotic Manipulator}
 The work in this report is conducted by Jeffry Walker, Joshua Beverly, Christopher Cook and Migueal de Rojas. The goal of the project was to design a 5 DOF Anthropomorphic Geometry Manipulator (APGM) with a gripper as end-effector. The end-effector should be able to lift a cube with lengths of 5cm and mass of 0.34kg and place it between two predetermined spatial coordinates \cite{walker2012}. Table \ref{comp-table2} lists some of the differences and similarities between ARPA and Anthropomorphic Robotic Manipulator (ARM).
 
@@ -179,6 +200,7 @@ The work in this report is conducted by Jeffry Walker, Joshua Beverly, Christoph
 
 
 
+\newpage
 \section{System description}
 \label{description}
 	
@@ -225,6 +247,7 @@ The matlab package is responsible for solving the inverse kinematics for ARPA. T
 
 The inverse kinematics solver is based on a URDF model of the robot, which means it can return inverse kinematics for any given 5DOF robotic manipulator. The script publishes the derived values of $\theta_n$ in the form of a Float64MultiArray to the kinematic\_publisher, which in turn is subscribed to by the controller.
 
+\newpage
 \subsubsection{Robotic arm}
 The robotic arm package contains the software running on the Arduino to control the servo motors. The main task of this node is to receive joint angles from the controller, and set the servo motors to the correct position. To control the servo motors, the native servo library provided by Arduino is used.
 
@@ -340,6 +363,7 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 		\label{fig:power}
 	\end{figure}
 	
+\newpage
 	\subsubsection{Arduino wiring}
 	Figure \ref{fig:wiring} shows the wiring of Arduino to supply power to the motors, as well as controlling them with PWM signals.
 	
@@ -351,6 +375,7 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 	\end{figure}
 	
 		
+\newpage
 	\section{Simulation and experiments}
 	\label{simex}
 	Since the project has served as a introduction to many new tools, we have had several experiment along the way to learn how to use these tools. This section will go through the simulations and experiments we have conducted during the course of the project.
@@ -403,7 +428,7 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 \pi - \theta_4 - \theta_3 - \mathrm{asin}(n_xc_{\theta_1}s_{\theta_2} - n_zc_{\theta_2} + n_ys_{\theta_1}s_{\theta_2}).
 \end{cases}
 \end{align*}
-
+\newpage
 We spent quite some time trying to implement these equations to control the model in Gazebo, but unfortunately we did not get it to work. This lead to looking into ROS packages that could solve it for us. After failing to integrate both MoveIt! and  IKFast, we decided to go for another solution. Robotics System Toolbox, a add-on for MATLAB, can solve the inverse kinematics when given a URDF file, so we decided to create a MATLAB node which solved the inverse kinematics. The downside with this approach is that is a numerical solver, meaning it is quite slow.
 
 	\subsection{D-H parameters}
@@ -457,16 +482,45 @@ During this final case study, the middle servo motor started operating sub-optim
 		\label{fig:three-split}
 	\end{figure}
 	
+\newpage
 	\section{Discussion}
 	\label{discussion}
-	Even though unexpected challenges related to the hardware arose along the project, we reached the main goals of the project and are thus satisfied with the outcome. We are pleased with the return of investment of learning ROS, and believe it will come in handy in future education and careers.
+	The short summary of our final thoughts about the project is that we are happy with the end result. In hindsight the biggest challenge except for the kinematics which will be discussed later, was numerous hardware faults. Naturally, as we are two software students with limited knowledge in terms of the mechanical and electrical facets of the project, some of the challenges we met might be self-inflicted.
 	
+When handed the project we were of the impression that the physical system was well tested and would "just work". As a result of this rather naive mindset, the mechanical and electrical development of the project ended up having much bigger scopes than initially planned in the project. The following paragraphs will discuss the challenges met during the project and is meant to serve as a heads-up for future student development.
+
+\subsection{Challenges}
+
+\subsubsection*{Malfunctioning servos}
+The initial servos on the manipulator were powered through a single Arduino Mega2560 so it is hard to conclude that these were at fault. In total, there was one servo-fatality during the project and we suspect that the servo in the third joint is soon to follow. When changing the power supply to the 12 AA batteries together with two Arduino Megas, we noticed a big difference in actuation from the servos but they still seem to tire. One of the theories we have discussed is that the construction of the robot is sub-optimal, thus inflicting unnecessary strain, especially to the bottom three servos.
+
+\subsubsection*{Sub-optimal construction/assembly}
+At first sight, the robot is very skewed, undoubtedly causing strain to the servos, as aforementioned. This especially strains the bottom servo, which carries the total weight on the single rotational pin on the servo, with no support. This might be a reason for it's misbehaving and constant wiggling. 
+
+There are also problems with friction in the assembly of the servos on the manipulator and also between the links. If the screws are tightened to the point where the robot feels stable, the friction generated between the far side of the servos and the actual mounting bracket on the link leaves the servo immobile. The other option is tightening the screws so that the servos are able to move, this leaves the robot in a more dodgy physical state, with a lot of unwanted rotation and movement, screws also tend to fall out while running the robot.
+
+In terms of unwanted rotation and movement the servos seems to misplace after running a while. When initially calibrated to be perpendicular to the rig the servos seem to misplace more and more, which demands recalibration more often than what should be expected.
+
+We also experienced a challenge of the robot falling over and solved this by making the rig on which it now is mounted to. Another benefit of the rig, is that it raises the manipulator's actionable area to approximately the same height as the already mounted metal plate that the robot itself is mounted to. The current camera rig is also sub-optimal, to put it nicely.
+
+\subsubsection*{Sub-optimal power supply}
+Although the servos get enough power through the 12 AA batteries and two Arduinos, the solution should not be a permanent one as the batteries are burned quickly. In total the robot has consumed a total of 48 AA batteries. A more permanent solution should be to facilitate for a power supply, during this project we did not want to dabble in this due to a lack of knowledge.
+
+\subsubsection*{"Cheating" with the kinematics}
+The kinematics proved a bigger challenge than first anticipated, and the work done ended up being a proof of work, unused in the actual project. Although this was a major setback, both in terms of time used and on a personal scale, we still managed to get a working kinematic solver with the help of Matlab. We also tried ROS MoveIt, but could not get it to give meaningful results.
+
+\newpage
+\subsection{Summary}
+As stated in the introduction to this section, we are happy with the end result of the project. Seen in regards to the goals we set we reached all goals except for having our own functioning kinematic model. The positive side to this is that we still managed to get a working product.
+
+The first goal which was to gain knowledge in ROS, is in our opinion reached in terms of the project's size. We feel that the delivered ROS-system is set up in a logical and tidy manner, where we have been able to learn and implement many of ROS' capabilities and functions.
+
+In terms of the stated goal of developing a fully functional prototype, we are happy with the final delivery and demo, apart from the kinematics which is slow. The integration of the system was a process smoother than expected, especially the integration of the final part which was the detection system. We managed to get a approximate 1:1 relationship between the physical and virtual model, apart from physical defects and other issues arising during the project. We also managed to integrate the detection system so the robot acts based on the object detection. We also managed to develop the kinematic model for ARPA and although it ended up being unused, the work done gave good insights in the mathematics behind robotic control.
+
+The project as a whole has been a positive experience although the learning curve seemed steep at times and many unexpected challenges arose during the project. Both participants of the project are very pleased with both the end result and the learning outcome and the project has definitely sparked a greater interest in the field of robotics.
 	
-	
-	\newpage
-
-
-
+\newpage
+\pagenumbering{Roman}
 \begin{appendices}
 \section{Complete kinematic solution}
 \label{appendix:ik}
@@ -487,7 +541,6 @@ Link 		& a 			& $\alpha$ 	& d & $\theta$ \\\hline
 5 & $a_5$ 	& 0 			& 0 		& $\theta_5$ \\\hline
 6 & $a_6$ 	& 0 			& 0 		& 0 \\\hline
 \end{tabular}
-  \caption{This table shows some data}
   \label{tab:DH}
 \end{table}
 
@@ -784,7 +837,7 @@ Angles $\theta_1,\,\theta_2,\,\theta_3,\,\theta_4,\,\theta_5$ are given by the f
 \pi - \theta_4 - \theta_3 - \mathrm{asin}(n_xc_{\theta_1}s_{\theta_2} - n_zc_{\theta_2} + n_ys_{\theta_1}s_{\theta_2}).
 \end{cases}
 \end{align*}
-
+\newpage
 \section{GitHub repository}
 Link to GitHub: https://github.com/andrehaland/DFSM3200-robotic-arm
 
