@@ -43,57 +43,89 @@ Using the previous paragraph as the background, the motivation for this project 
 
 The project itself has served as an introduction to robot technology, thus, a big part of the project has been the learning of the different technologies which will be discussed in detail later in the report.
 
+\subsection{Goals}
+The following goals were set for the project:
+\begin{itemize}
+\item Gain knowledge in Robotics Operating System
+\item Develop a fully functioning prototype
+	\begin{itemize}
+	\item 1:1 relationship between physical and virtual model
+	\item Actions based on object-detection
+	\item Develop own kinematic model	
+	\end{itemize}
+	
+\end{itemize}
+
 \subsection{Contributions}
 The project aims to contribute an environment consisting of a physical 5DOF robotic manipulator with a 1:1 relationship to a virtual simulation which can be used for rapid prototyping and testing. The system has incorporated a detection system to automate the process of finding markers. In addition, the delivered report and GitHub repository should serve as a contribution to student inheriting the project at a later stage.
 
 The physical robot is powered by two Arduino Mega2560's and 12 AA batteries. One of the Arduinos functions as the controller for the physical robot, while the other one serves solely as a power supply to a servo motor.
 
 \subsection{Tools}
+The tools used in ARPA, both in terms of hardware and software are presented in the following sections.
+
 \subsubsection{Hardware}
+
+Table \ref{hardware} shows a list of the hardware components used in ARPA. The robotic manipulator is not listed, nor are bare necessities such as wiring etc.
+
 	\begin{center}           
-    \begin{longtable}{| c | c | c | c | c |}
+    \begin{longtable}{| l | c | c |}
               \hline
 %Utvid ved å kopiere: xx.xx.2018 & IDXX & Oppdatering \\  \hline            
-\multicolumn{5}{|c|}{\textbf{Hardware}} \\ \hline \endhead
-\textbf{Component} & \textbf{Quantity} & \textbf{Usage} & \textbf{Link} & \textbf{Ordliste} \\ \hline             
-              \textbf{Prosjektplan} &  Pp & X & X & \\ \hline
+\multicolumn{3}{|c|}{\textbf{Hardware}} \\ \hline \endhead
+\textbf{Component} & \textbf{Quantity} & \textbf{Usage} \\ \hline             
+              \textbf{Hitec HS-475HB Servo} &  1 & 4th joint \\ \hline
               
-              \textbf{Krav og Design} &  Kd & X & X &  \\ \hline
+              \textbf{Sanwa Hyper ERG-VZ Servo} &  2 & 2nd and 3rd joint \\ \hline
              
-              \textbf{Test} & Te & X & & \\ \hline
+              \textbf{Savox Digital SC0252MG Servo} & 1 & 1st joint \\ \hline
               
-              \textbf{Risiko} & Ri & X & X &\\ \hline
+              \textbf{Parallax Standard Servo} & 1 & 5th joint \\ \hline
               
-              \textbf{Konsept} & Kon & X & X & X \\ \hline
+              \textbf{Creative Labs Webcamera} & 1 & Detection system  \\  \hline
               
-              \textbf{Research} & Re & X &  & X \\  \hline
+              \textbf{Arduino MEGA2560} & 2 & Control and power  \\ \hline
               
-              \textbf{Teknisk} & Tek & X & X & X \\  \hline
-              
-              \textbf{Vedlegg} & & & & \\  \hline
-              
-              \textbf{Bibliografi} & & & & \\  \hline
-                                       
+              \textbf{4x AA Battery Pack} & 3 & Power   \\  \hline
+
+\caption{Hardware used in ARPA}
+\label{hardware}                                       
 \end{longtable}
-\end{center}      
-
-
-
+\end{center}
 
 \subsubsection{Software dependencies}
-This section will summarize all the software dependencies used in the development of ARPA.
-	\begin{itemize}
-		\item \textbf{Ubuntu 16.04 LTS:} Operating System [http://releases.ubuntu.com/16.04.4/]
-		\item \textbf{Robotic Operating System(ROS) Kinetic:} Framework for robot software [http://wiki.ros.org/kinetic/Installation/Ubuntu]
-		\item \textbf{rosserial\_arduino:} Include Arduino into ROS node network [http://wiki.ros.org/rosserial\_arduino]
-		\item \textbf{MATLAB:} Programming platform [https://se.mathworks.com/products/matlab.html]
-		\item \textbf{Robotics System Toolbox:} MATLAB add-on providing different robotic software [https://se.mathworks.com/products/robotics.html]
-		\item \textbf{OpenCV2:} Computer vision library [https://opencv.org/]
-		\item \textbf{Python:} Programming language [https://www.python.org/]
-	\end{itemize}
-	
+
+Table \ref{software} shows a list of the software dependencies for running ARPA.
+
+	\begin{center}           
+    \begin{longtable}{| l | l |}
+              \hline
+%Utvid ved å kopiere: xx.xx.2018 & IDXX & Oppdatering \\  \hline            
+\multicolumn{2}{|c|}{\textbf{Software}} \\ \hline \endhead
+\textbf{Software} & \textbf{Usage} \\ \hline             
+              \textbf{Ubuntu 16.04 LTS} & Operating System \\ \hline
+              
+              \textbf{ROS Kinetic} & Framework for robot software \\ \hline
+              
+              \textbf{Gazebo} & Simulation environment \\  \hline
+             
+              \textbf{rosserial\_arduino} & Include Arduino into ROS node network \\ \hline
+              
+              \textbf{MATLAB: Robotics System Toolbox} & MATLAB add-on providing different robotic software \\ \hline
+              
+              \textbf{OpenCV2} & Computer vision library used with Python \\  \hline
+
+\caption{Software dependencies}
+\label{software}                                       
+\end{longtable}
+\end{center}     
+
+\subsection{Content}
+In addition to the introduction, this report consists of \textbf{REF RELATED WORKS}, \textbf{\ref{description}: System description}, \textbf{\ref{simex}: Simulations and experiments} and \textbf{\ref{discussion}: Discussion}
+
 %\section{Related works}
 \section{System description}
+\label{description}
 	
 
 \subsection{Architecture}
