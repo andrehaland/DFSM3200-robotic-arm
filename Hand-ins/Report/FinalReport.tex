@@ -1,25 +1,43 @@
-\documentclass[11pt,a4paper]{report}
+\documentclass[11pt,a4paper, titlepage]{report}
 
 \usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{graphicx,wrapfig}
+\usepackage{float}
+\usepackage[export]{adjustbox}
+\usepackage{array}
+\usepackage{comment}
+\usepackage{tabularx,longtable}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{subcaption}
-\usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage{amsmath}
-\usepackage{wrapfig}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\usepackage[width=16.00cm, left=2.50cm, top=2.5cm, bottom=2.5cm]{geometry}
 
 \title{ARPA: Autonomous Robotic Pointer Arm}
 \author{Helgerud, Erlend \and Håland, André}
 
 \begin{document}
+	\setlength\parindent{0pt}
+	\setlength\parskip{10pt}
+	\headheight
+	\setlength{15pt}{}
+	\footskip
+	\setlength{33pt}{}
+	\setcounter{secnumdepth}{4}
 	\maketitle
+	
+\begin{abstract}
+This report is written as part of a project in the course DFMS3200 - Simulation and Modelling at the University College of South-Eastern Norway. The background for the project is the idea of automation in industrial production lines in order to minimize costs and increase productivity. The solution proposed is an autonomous 5DOF robotic manipulator that perform actions based on a live video feed. The main focus of the project is to serve as a introductory case-study in robotic manipulation and control, and therein the usage of selected tools. The project is split in two, virtual simulation and physical representation. For controlling both the virtual and physical representation, the project utilizes ROS Kinetic (Robotic Operating System) in Ubuntu 16.04 with the majority of code written in C++. The physical robot is powered by 12 AA batteries together with two Arduino MEGA2560's, where one of the Arduinos acts as a master controller. The vision system is based in Python 2.6 and OpenCV2. In order to provide the virtual representation the project incorporates Gazebo together with needed models written in URDF/Xacro and configurations written in YAML. Kinematics are handled in Matlab's Robotic Toolbox. As a final demonstration, the separate components of the project will be run with a 1:1 relationship between the virtual and physical representations, integrating all components of the project.
+\end{abstract}
+	
 	\tableofcontents
 	\newpage
 
-	%\section{Abstract}
+
+
 	%\section{Introduction}
 	%\section{Related works}
 	\section{System description}
