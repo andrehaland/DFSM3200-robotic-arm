@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{subcaption}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -60,7 +61,7 @@ As described in \textbf{todo: refer to XX}, we had some challenges with finding 
 	
 	When running ARPA over two computers, one of them must be chosen to run as the ROS master. The selected master computer must source the master.sh script in every terminal used for running ROS commands. Next, the slave.sh script must be modified to contain the IP-address of the master computer. The address can be read from the output of the master.sh script. When the slave script is modified to contain the correct address, it must be sourced in all terminals on the slave computer that runs any ROS commands.
 	
-	Next up is to launch all ROS nodes. First of all, the setup.bash script in the devel directory of the catkin workspace must be sourced. When this is done on the master computer, the Arduino controlling the servos of the robotic arm must be connected to the computer. When it is connected, the command \textit{roslaunch robotic\_arm master.launch} can be run. Note that the launch file is configured to setup the ROS node on /dev/ttyACM0. This means that either the Arduino controlling the servo must be connected before the Arduino used for power supply (see ), or the launch file must be modified to contain the correct device parameter. 
+	Next up is to launch all ROS nodes. First of all, the setup.bash script in the devel directory of the catkin workspace must be sourced. When this is done on the master computer, the Arduino controlling the servos of the robotic arm must be connected to the computer. When it is connected, the command \textit{roslaunch robotic\_arm master.launch} can be run. Note that the launch file is configured to setup the ROS node on /dev/ttyACM0. This means that either the Arduino running the code must be connected before the Arduino used for power supply (see ), or the launch file must be modified to contain the correct device parameter. 
 	
 	The roslaunch command starts the camera, controller and the 5DOF robot node. The startup of the camera requires the user to set the coordinate system of ARPA's workspace. \textbf{todo: write calibration of camera}
 	
@@ -71,7 +72,8 @@ As described in \textbf{todo: refer to XX}, we had some challenges with finding 
 	The user interface of ARPA is split into two: one on the master computer and one on the slave computer. Figure \ref{fig:ui-master} shows the user interface of the master. The window to the left is a live feed of the camera. It shows the user the detection of a red dot, i.e. where ARPA will move when given a ready signal. The window to the right allows the user to send this ready signal. When the ready.sh script is executed, the controller node will accept the next incoming coordinates and execute all necessary communications and actions for both the physical arm and the Gazebo model to move.
 	
 	\begin{figure}[ht]
-		\includegraphics[width=\linewidth]{../Diagrams/UI-master.png}
+		\centering
+		\includegraphics[width=0.95\linewidth]{../Diagrams/UI-master.png}
 		\caption{User interface: Master}
 		\label{fig:ui-master}
 	\end{figure}
@@ -79,7 +81,8 @@ As described in \textbf{todo: refer to XX}, we had some challenges with finding 
 	Figure \ref{fig:ui-slave} shows the user interface of the slave. Gazebo is launched as described in \textit{\ref{startup} Starting program}, but the rqt window on the left is not included as a part of the launch file. The user can choose to start rqt from a new terming through the \textit{rqt} command. The preferred setup for this project was to have rqt run the console plugin to show all the ROS messages in a GUI.
 	
 	\begin{figure}[ht]
-		\includegraphics[width=\linewidth]{../Diagrams/UI-slave.png}
+		\centering
+		\includegraphics[width=0.95\linewidth]{../Diagrams/UI-slave.png}
 		\caption{User interface: Slave}
 		\label{fig:ui-slave}
 	\end{figure}
@@ -97,6 +100,53 @@ As described in \textbf{todo: refer to XX}, we had some challenges with finding 
 	\end{itemize}
 	
 	\subsection{Hardware}
+	During the project we had to make some adjustments to parts of the hardware related to the robotic arm. This section will go explain which adjustments has been made, and why.
+	\subsubsection{Rig}
+	When we were handed the robotic arm at the beginning of the course, we did some testing of it. First of all, we discovered that it had both had some loose screws, and also missing some. This lead us to spending some time on making the arm more rigid and secure. Figure \ref{fig:early-rig} shows this stage of the project.
+	
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[width=0.8\linewidth]{../Diagrams/early-setup.jpg}
+		\caption{Early stage of the hardware}
+		\label{fig:early-rig}
+	\end{figure}
+	
+	During the first tests of the robotic arm, we discovered that the torque would make the robot fall over. We decided to make a more stable mechanical rig, by attaching the robotic arm to a stable wooden rig. Figure \ref{fig:plank-rig} shows the process of making the wooden rig.
+	
+	\begin{figure}
+	\centering
+	
+	
+	\begin{subfigure}[t]{0.2\textwidth}
+		
+		\includegraphics[height=1.2in]{../Diagrams/plank1.jpg}
+		
+		
+	\end{subfigure}%
+	
+	\begin{subfigure}[t]{0.2\textwidth}
+		\centering
+		\includegraphics[height=1.2in]{../Diagrams/plank2.jpg}
+		
+	\end{subfigure}%
+	
+	\begin{subfigure}[t]{0.2\textwidth}
+		\includegraphics[height=1.2in]{../Diagrams/plank3.jpg}
+		
+	\end{subfigure}
+	
+	\begin{subfigure}[t]{0.2\textwidth}
+		\includegraphics[height=1.2in]{../Diagrams/plank4.jpg}
+		
+	\end{subfigure}
+	\caption{Process of making a wooden rig}
+	\label{fig:plank-rig}	
+	\end{figure}
+	
+	\subsubsection{Power supply}
+	The servo motors are running nominally at 6V. As the arm consists of five motors, we could not power them all from the Arduino. We decided to buy battery holders to run 4 AA batteries in series. Since an AA battery is 1.5V, running four of them in series adds up to 6V.
+	
+	Due to the bigger torque on the bottom motors, we decided to supply the bottom three motors with 6V each,  having them run with nominal voltage level. The upper two motors of the arm are powered by one Arduino each, meaning they get 5V.
 	
 	
 	
