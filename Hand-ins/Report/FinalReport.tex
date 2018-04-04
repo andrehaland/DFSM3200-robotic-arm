@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper, titlepage]{report}
+\documentclass[11pt,a4paper, titlepage]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{amssymb}
@@ -30,20 +30,74 @@
 	\maketitle
 	
 \begin{abstract}
-This report is written as part of a project in the course DFMS3200 - Simulation and Modelling at the University College of South-Eastern Norway. The background for the project is the idea of automation in industrial production lines in order to minimize costs and increase productivity. The solution proposed is an autonomous 5DOF robotic manipulator that perform actions based on a live video feed. The main focus of the project is to serve as a introductory case-study in robotic manipulation and control, and therein the usage of selected tools. The project is split in two, virtual simulation and physical representation. For controlling both the virtual and physical representation, the project utilizes ROS Kinetic (Robotic Operating System) in Ubuntu 16.04 with the majority of code written in C++. The physical robot is powered by 12 AA batteries together with two Arduino MEGA2560's, where one of the Arduinos acts as a master controller. The vision system is based in Python 2.6 and OpenCV2. In order to provide the virtual representation the project incorporates Gazebo together with needed models written in URDF/Xacro and configurations written in YAML. Kinematics are handled in Matlab's Robotic Toolbox. As a final demonstration, the separate components of the project will be run with a 1:1 relationship between the virtual and physical representations, integrating all components of the project.
+This report is written as part of a project in the course DFMS3200 - Simulation and Modelling at the University College of South-Eastern Norway. The background for the project is the idea of automation in industrial production lines in order to minimize costs and increase productivity. The solution proposed is an autonomous 5DOF robotic manipulator that perform actions based on a live video feed. The main focus of the project is to serve as a introductory case-study in robotic manipulation and control, and therein the usage of selected tools. The project is split in two, virtual simulation and physical representation. For controlling both the virtual and physical representation, the project utilizes ROS Kinetic (Robotic Operating System) in Ubuntu 16.04 with the majority of code written in C++. The physical robot is powered by 12 AA batteries together with two Arduino MEGA2560's. The vision system is based in Python 2.6 and OpenCV2. In order to provide the virtual representation the project incorporates Gazebo together with needed models written in URDF/Xacro and configurations written in YAML. Kinematics are handled in Matlab's Robotics System Toolbox. As a final demonstration, the separate components of the project will be run with a 1:1 relationship between the virtual and physical representations, integrating all components of the project.
 \end{abstract}
 	
 	\tableofcontents
 	\newpage
 
+\section{Introduction}
+As a result of the high average of salaries in Norway a lot of the processing of food is outsourced to countries with a lower average salary \cite{berge2015}. An example is the outsourcing of processing of Norwegian salmon to Poland, which has a lower hourly rate of work by 13.5\% compared to Norway. A direct consequence of the difference is that companies like Marine Harvest export roughly processed salmon to Poland, and import fine processed salmon back to Norway \cite{digre2014}. To be able to preserve the processing of fish in Norway, there is a demand for a system that can remove defects such as blood and/or melanin defects from the surface of fish fillets.
+
+Using the previous paragraph as the background, the motivation for this project is to conduct case-study in robotic manipulation and control in order to be familiarized with possible tools and technologies used in robotics.
+
+The project itself has served as an introduction to robot technology, thus, a big part of the project has been the learning of the different technologies which will be discussed in detail later in the report.
+
+\subsection{Contributions}
+The project aims to contribute an environment consisting of a physical 5DOF robotic manipulator with a 1:1 relationship to a virtual simulation which can be used for rapid prototyping and testing. The system has incorporated a detection system to automate the process of finding markers. In addition, the delivered report and GitHub repository should serve as a contribution to student inheriting the project at a later stage.
+
+The physical robot is powered by two Arduino Mega2560's and 12 AA batteries. One of the Arduinos functions as the controller for the physical robot, while the other one serves solely as a power supply to a servo motor.
+
+\subsection{Tools}
+\subsubsection{Hardware}
+	\begin{center}           
+    \begin{longtable}{| c | c | c | c | c |}
+              \hline
+%Utvid ved å kopiere: xx.xx.2018 & IDXX & Oppdatering \\  \hline            
+\multicolumn{5}{|c|}{\textbf{Hardware}} \\ \hline \endhead
+\textbf{Component} & \textbf{Quantity} & \textbf{Usage} & \textbf{Link} & \textbf{Ordliste} \\ \hline             
+              \textbf{Prosjektplan} &  Pp & X & X & \\ \hline
+              
+              \textbf{Krav og Design} &  Kd & X & X &  \\ \hline
+             
+              \textbf{Test} & Te & X & & \\ \hline
+              
+              \textbf{Risiko} & Ri & X & X &\\ \hline
+              
+              \textbf{Konsept} & Kon & X & X & X \\ \hline
+              
+              \textbf{Research} & Re & X &  & X \\  \hline
+              
+              \textbf{Teknisk} & Tek & X & X & X \\  \hline
+              
+              \textbf{Vedlegg} & & & & \\  \hline
+              
+              \textbf{Bibliografi} & & & & \\  \hline
+                                       
+\end{longtable}
+\end{center}      
 
 
-	%\section{Introduction}
-	%\section{Related works}
-	\section{System description}
+
+
+\subsubsection{Software dependencies}
+This section will summarize all the software dependencies used in the development of ARPA.
+	\begin{itemize}
+		\item \textbf{Ubuntu 16.04 LTS:} Operating System [http://releases.ubuntu.com/16.04.4/]
+		\item \textbf{Robotic Operating System(ROS) Kinetic:} Framework for robot software [http://wiki.ros.org/kinetic/Installation/Ubuntu]
+		\item \textbf{rosserial\_arduino:} Include Arduino into ROS node network [http://wiki.ros.org/rosserial\_arduino]
+		\item \textbf{MATLAB:} Programming platform [https://se.mathworks.com/products/matlab.html]
+		\item \textbf{Robotics System Toolbox:} MATLAB add-on providing different robotic software [https://se.mathworks.com/products/robotics.html]
+		\item \textbf{OpenCV2:} Computer vision library [https://opencv.org/]
+		\item \textbf{Python:} Programming language [https://www.python.org/]
+	\end{itemize}
 	
-	\subsection{Architecture}
-	The idea of ARPA is to have a 1:1 relationship between a physical robotic arm, and a simulated model in Gazebo. This means that the model in Gazebo should contain (as good as) the same measurements as the physical robot. They will also receive the same control signals leading to synchronized movement. Figure \ref{fig:architecture} show this relationship between the real world and the simulated world.
+%\section{Related works}
+\section{System description}
+	
+
+\subsection{Architecture}
+The idea of ARPA is to have a 1:1 relationship between a physical robotic arm, and a simulated model in Gazebo. This means that the model in Gazebo should contain (as good as) the same measurements as the physical robot. They will also receive the same control signals leading to synchronized movement. Figure \ref{fig:architecture} show this relationship between the real world and the simulated world.
 	
 	\begin{figure}[H]
 		\includegraphics[width=\linewidth]{../Diagrams/Architecture.png}
@@ -113,18 +167,6 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 		\label{fig:ui-slave}
 	\end{figure}
 	
-	\subsection{Dependencies}
-	This section will summarize all the software dependencies used in the development of ARPA.
-	\begin{itemize}
-		\item \textbf{Ubuntu 16.04 LTS:} Operating System [http://releases.ubuntu.com/16.04.4/]
-		\item \textbf{Robotic Operating System(ROS) Kinetic:} Framework for robot software [http://wiki.ros.org/kinetic/Installation/Ubuntu]
-		\item \textbf{rosserial\_arduino:} Include Arduino into ROS node network [http://wiki.ros.org/rosserial\_arduino]
-		\item \textbf{MATLAB:} Programming platform [https://se.mathworks.com/products/matlab.html]
-		\item \textbf{Robotics System Toolbox:} MATLAB add-on providing different robotic software [https://se.mathworks.com/products/robotics.html]
-		\item \textbf{OpenCV2:} Computer vision library [https://opencv.org/]
-		\item \textbf{Python:} Programming language [https://www.python.org/]
-	\end{itemize}
-	
 	\subsection{Hardware}
 	During the project we had to make some adjustments to parts of the hardware related to the robotic arm. This section will go explain which adjustments has been made, and why.
 	\subsubsection{Rig}
@@ -181,6 +223,13 @@ Before running \textit{roslaunch robotic\_arm master.launch} there should be a r
 	%\section{Discussion}
 	
 	%\section{Appendix}
-	
+
+\begin{thebibliography}{1}
+
+\bibitem{berge2015} Aslak Berge. Avhengig av polske kniver. \textit{http://ilaks.no/avhengig-av-polske-kniver-2/}. Aug 2018.
+
+\bibitem{digre2014} Hanne Digre. Lønnsom foredling av sjømat i Norge. 2014.
+
+\end{thebibliography}	
 	
 \end{document}
