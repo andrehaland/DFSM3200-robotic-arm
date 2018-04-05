@@ -1,0 +1,28 @@
+5dof_robot:
+ # Publish all joint states
+ joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+
+ # Position Controllers
+ joint2:
+  type: position_controllers/JointPositionController
+  joint: second_joint
+    # PID
+ joint3:
+  type: position_controllers/JointPositionController
+  joint: third_joint
+  # PID
+ joint4:
+  type: position_controllers/JointPositionController
+  joint: fourth_joint
+  # PID
+ joint5:
+  type: position_controllers/JointPositionController
+  joint: fifth_joint
+  # PID
+
+ joint6:
+  type: position_controllers/JointPositionController
+  joint: sixth_joint
+  # PID
